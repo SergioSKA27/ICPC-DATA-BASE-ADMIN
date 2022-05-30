@@ -193,7 +193,7 @@ def  delete_juez(id_juez):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM juez WHERE id_juez = %s;",(id_juez))
+        cur.execute("DELETE FROM juez WHERE id_juez = %s;",(id_juez,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -204,7 +204,7 @@ def  delete_persona(id_persona):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM persona WHERE id_persona = %s;",(id_persona))
+        cur.execute("DELETE FROM persona WHERE id_persona = %s;",(id_persona,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -216,7 +216,7 @@ def  delete_tercia(id_persona):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM tercia WHERE id_juez = %s;",(id_persona))
+        cur.execute("DELETE FROM tercia WHERE id_juez = %s;",(id_persona,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -228,7 +228,7 @@ def  delete_problema(id_problem):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM problema WHERE code_problema = %s;",(id_problem))
+        cur.execute("DELETE FROM problema WHERE code_problema = %s;",(id_problem,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -240,7 +240,7 @@ def  delete_equipo(id_equipo):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM equipo WHERE id_equipo = %s;",(id_equipo))
+        cur.execute("DELETE FROM equipo WHERE id_equipo = %s;",(id_equipo,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -252,7 +252,7 @@ def  delete_universidad(id_univ):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM universidad WHERE cve_universidad = %s;",(id_univ))
+        cur.execute("DELETE FROM universidad WHERE cve_universidad = %s;",(id_univ,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -265,7 +265,7 @@ def  delete_FinalMundial(idFinalM):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM final_mundial WHERE id_final_mundial = %s;",(idFinalM))
+        cur.execute("DELETE FROM final_mundial WHERE id_final_mundial = %s;",(idFinalM,))
         conexion.commit()
         cur.close()
         conexion.close()
@@ -277,7 +277,7 @@ def  delete_competencia(id):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("DELETE FROM competicion WHERE code_competicion = %s;",(id))
+        cur.execute("DELETE FROM competicion WHERE code_competicion = %s;",(id,))
         conexion.commit()
         cur.close()
         conexion.close()
