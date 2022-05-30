@@ -880,7 +880,7 @@ while True:
         values_reg = values  
         reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
                        'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
-        #insert_persona(reg_persona)
+        insert_persona(reg_persona)
         print(reg_persona)
         window.Element('-IDPersonaL2-').update(value="")
         window.Element('-Namepersona-').update(value="")
@@ -901,7 +901,7 @@ while True:
     if event == '-AddregTercia-' and checkTerciaReg(values) == True:  
         values_reg = values  
         reg_tercia = {'IdPersona' : values['-IDPersonaL4-'],'idEqupol4' : values['-IDEquipoL4-'] }
-        #insert_Tercia(reg_tercia)
+        insert_Tercia(reg_tercia)
         print(reg_tercia)
         window.Element('-IDPersonaL4-').update(value="")
         window.Element('-IDEquipoL4-').update(value="")
@@ -919,7 +919,7 @@ while True:
         #{'-IDequipoL5-','-Nameequipo-','-claveUnivL5-','-statusL5-'}
         values_reg = values  
         reg_equipo = {'Idequipo' : values['-IDequipoL5-'],'NombreEquipo' : values['-Nameequipo-'], 'claveUniver' : values['-claveUnivL5-'],'estatus' : values['-statusL5-']}
-        #insert_equipo(reg_equipo)
+        insert_equipo(reg_equipo)
         print(reg_equipo)
         window.Element('-IDequipoL5-').update(value="")
         window.Element('-Nameequipo-').update(value="")
@@ -938,7 +938,7 @@ while True:
         #{IDJuezL6,IDpersonaL6,especializacionL6,puntuacionL6} 
         values_reg = values  
         reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
-        #insert_juez(reg_juez)
+        insert_juez(reg_juez)
         print(reg_juez)
         window.Element('-IDJuezL6-').update(value="")
         window.Element('-IDpersonaL6-').update(value="")
@@ -961,7 +961,7 @@ while True:
         #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
         reg_comp = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
                        'Region' : values['-RegionL7-']}
-        #insert_competencia(reg_comp)
+        insert_competencia(reg_comp)
         print(reg_comp)
         window.Element('-IDpruebaL7-').update(value="")
         window.Element('-TiempoDuracion-').update(value="")
@@ -980,7 +980,7 @@ while True:
         #{IDUniversidadL8,NombreUniver,RegionL8}  
         values_reg = values  
         reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 'region' : values['-RegionL8-']}
-        #insert_Universidad(reg_universidad)
+        insert_Universidad(reg_universidad)
         print(reg_universidad)
         window.Element('-IDUniversidadL8-').update(value="")
         window.Element('-NombreUniver-').update(value="")
@@ -997,7 +997,7 @@ while True:
         #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
         values_reg = values  
         reg_problem = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
-        #insert_problema(reg_problem)
+        insert_problema(reg_problem)
         print(reg_problem)
         window.Element('-IDproblemaL9-').update(value="")
         window.Element('-TipoL9-').update(value="")
