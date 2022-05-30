@@ -1,7 +1,192 @@
 #!/usr/bin/python
 import PySimpleGUI as sg
+from os import execv
 import psycopg2 as pgdb
-#conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password="postgres")#conectamos la base de datos 
+
+pasword = "postgres"
+
+
+
+
+
+def  insert_persona(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%i,%s,%s,%s,%s,%s,%s);",
+        (values['Id'],values['Nombre'],values['ApellidoP'],values['ApellidoM'],values['FechaN' ],values['Telefono' ],values['CorreoE']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_Tercia(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  tercia(id_persona,id_equipo) VALUES (%s,%s);",(values['IdPersona'],values['idEqupol4']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_equipo(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  equipo(id_equipo,nombre,cve_universidad,estatus) VALUES (%s,%s,%s,%s);",
+        (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_equipolocal(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  equipo_local(id_equipo,code_competicion,cve_universidad) VALUES (%s,%s,%s);",
+        (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_equiporegional(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  equipo_regional(id_equipo,code_competicion) VALUES (%s,%s);",
+        (values['Idequipo'],values['NombreEquipo']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+def  insert_equipomundial(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  equipo_mundial(id_final_mundial,id_equipo) VALUES (%s,%s);",
+        (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_juez(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  juez(id_juez,id_persona,especializacion,puntuacion) VALUES (%s,%s,%s,%s);",
+        (values['IdJuez'],values['idpersona'],values['especiaslizacion'],values['puntuacion']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e 
+
+def  insert_Universidad(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  universidad(cve_universidad,nombre,id_region) VALUES (%s,%s,%s);",
+        (values['IdUniver'],values['Nombre'],values['region']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+def  insert_problema(values):
+    try:
+        reg_problem = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
+
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  problema(code_problema,descripcion,tipo) VALUES (%s,%s,%s);",
+        (values['IdProblem'],values['Desc'],values['Tipo']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e: 
+        raise e
+
+
+def  insert_programa(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  programa(id_programa,code_problema,id_equipo,lenguaje_programacion,valido,tiempo_resolucion_minutos) VALUES (%s,%s,%s,%s,%s,%s);")
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_competencia(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  competicion(code_competicion,descripcion,duracion_hrs,fecha,no_problemas,id_region) VALUES (%s,%s,%s,%s,%s,%s);",
+        (values['IdComp'],'Desc',values['TiempoDur'],values['Fecha'],values['numproblems'],values['Region']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  insert_competecialocal(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  competicion_local(code_competicion,cve_universidad) VALUES (%s,%s);")
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+def  insert_competeregional(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT ")
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+def  insert_competeciamundial(values):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("INSERT INTO  final_mundial(id_final_mundial,code_competicion,fecha,ciudad) VALUES (%s,%s,%s,%s);",
+        (values['IdFinalM'],values['Idcomp'],values['fechaR'],values['CiudadR']))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+
+
     
 Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria",
             "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
@@ -39,8 +224,7 @@ layout1 = [[sg.Button('<-', key='-returnl0L1-'),sg.Image('logo.png',key='logo2')
         [sg.Button('Añadir problema',auto_size_button=True,key='-ProblemButton-')],
         [sg.Button('Añadir Equipo Competencia',auto_size_button=True,key='-TeamCompButton-')],
         [sg.Button('Añadir Competencia Local',auto_size_button=True,key='-LocalComp-')],
-        [sg.Button('Añadir Final Mundial',auto_size_button=True,key='-WorldFinalButton-')],
-        ] 
+        [sg.Button('Añadir Final Mundial',auto_size_button=True,key='-WorldFinalButton-')]] 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una persona
 layout2 = [[sg.Button('<-', key='-returnl1L2-'), sg.Text('AÑADIR UNA NUEVA PERSONA A LA BASE DE DATOS',font='Helvetica')],
@@ -133,10 +317,12 @@ layout11 = [[sg.Button('<-', key='-returnl1L11-'), sg.Text('AÑADIR UNA NUEVA CO
 layout12 = [[sg.Button('<-', key='-returnl1L12-'), sg.Text('AÑADIR UNA NUEVA FINAL MUNDIAL A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDUFinalML12-',size=(10,8))],
            [sg.Text('ID competencia', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdCompetenciaL12-',size=(30,30))],
-           [sg.Text('Ciudad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-CiudadL11-',size=(30,30))],
-           [ sg.Text('Fecha de realizacion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-FechaRL11-',size=(20,20)),sg.In(key='-CALL11-', enable_events=True, visible=False),
-        sg.CalendarButton('Calendar', target='-CALL11-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDARL11_', format=('%d %B, %Y'))],
+           [sg.Text('Ciudad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-CiudadL12-',size=(30,30))],
+           [ sg.Text('Fecha de realizacion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-FechaRL12-',size=(20,20)),sg.In(key='-CALL12-', enable_events=True, visible=False),
+        sg.CalendarButton('Calendar', target='-CALL12-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDARL12_', format=('%d %B, %Y'))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregFinalMundial-')]]
+
+#{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
 
 #----------------------------------------------------------------------------------------
 #Este layout continene las opciones para eliminar elementos a la base de Datos--
@@ -151,6 +337,30 @@ layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2
         [sg.Button('Borrar registro Equipo Competencia',auto_size_button=True,key='-TeamCompButtonDelete-')],
         [sg.Button('Borrar registro Final Mundial',auto_size_button=True,key='-WorldFinalButtonDelete-')]] 
 
+#Este layout corresponde al borrado de una persona
+layout21 = [[sg.Button('<-', key='-returnl20L21-'), sg.Text('BORRAR UNA PERSONA DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL21-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeletePersona-')]]
+
+
+#Este layout corresponde al borrado de una tercia
+layout22 = [[sg.Button('<-', key='-returnl20L22-'), sg.Text('BORRAR UNA TERCIA DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL22-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteTercia-')]]
+
+
+#Este layout corresponde al borrado de una Juez
+layout23 = [[sg.Button('<-', key='-returnl20L23-'), sg.Text('BORRAR UN JUEZ DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL23-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteJuez-')]]
+
+
+#Este layout corresponde al borrado de una Equipo
+layout24 = [[sg.Button('<-', key='-returnl20L24-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdequipoL24-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+
+
 
 #----------------------------------------------------------------------------------------
 #Layout principal 
@@ -158,7 +368,8 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
         sg.Column(layout=layout4,key='-COL{4}-',visible=False),sg.Column(layout=layout5,key='-COL{5}-',visible=False),sg.Column(layout=layout6,key='-COL{6}-',visible=False),
         sg.Column(layout=layout7,key='-COL{7}-',visible=False),sg.Column(layout=layout8,key='-COL{8}-',visible=False),sg.Column(layout=layout9,key='-COL{9}-',visible=False),
         sg.Column(layout=layout10,key='-COL{10}-',visible=False),sg.Column(layout=layout11,key='-COL{11}-',visible=False),sg.Column(layout=layout12,key='-COL{12}-',visible=False),
-        sg.Column(layout=layout20,key='-COL{20}-',visible=False),]]
+        sg.Column(layout=layout20,key='-COL{20}-',visible=False), sg.Column(layout=layout21,key='-COL{21}-',visible=False),sg.Column(layout=layout22,key='-COL{22}-',visible=False),
+        sg.Column(layout=layout23,key='-COL{23}-',visible=False),sg.Column(layout=layout24,key='-COL{24}-',visible=False),]]
 
 
 
@@ -177,8 +388,8 @@ def is_num(value):
                 continue
             else: 
                 val = False
-    except e:
-        raise e
+    except:
+        return None
     return val
 
 
@@ -191,7 +402,7 @@ def CheckPersonaReg(values):
     """
     flag = True
     k = 0
-    if len(values['-IDPersonaL2-']) > 0 and len(values['-IDPersonaL2-']) <= 8: 
+    if len(values['-IDPersonaL2-']) > 0 and is_num(values['-IDPersonaL2-']): 
         k += 1
     else:
         flag = False
@@ -232,11 +443,6 @@ def CheckPersonaReg(values):
     else :
         flag = False 
     
-    if len(values['-ContryP-']) > 0:
-        k += 1
-    else :
-        flag = False
-        
     if flag:
         return True
     else: 
@@ -247,12 +453,12 @@ def checkTerciaReg(values):
     flag = True
     k = 0
     
-    if len(values['-IDPersonaL4-']) > 0 and len(values['-IDPersonaL4-']) <= 8: 
+    if len(values['-IDPersonaL4-']) > 0 and is_num(values['-IDPersonaL4-']): 
         k += 1
     else:
         flag = False
     
-    if len(values['-IDEquipoL4-']) > 0 and len(values['-IDEquipoL4-']) <= 8: 
+    if len(values['-IDEquipoL4-']) > 0 and is_num(values['-IDEquipoL4-']): 
         k += 1
     else:
         flag = False
@@ -272,12 +478,12 @@ def CheckEquipoReg(values):
     """
     flag = True
     k = 0
-    if len(values['-IDequipoL5-']) > 0 and len(values['-IDequipoL5-']) <= 8: 
+    if len(values['-IDequipoL5-']) > 0 and is_num(values['-IDequipoL5-']): 
         k += 1
     else:
         flag = False
         
-    if len(values['-Nameequipo-']) > 0 and len(values['-Nameequipo-']) <= 20: 
+    if len(values['-Nameequipo-']) > 0 and len(values['-Nameequipo-']) <= 30: 
         k += 1
     else :
         flag = False
@@ -305,12 +511,12 @@ def CheckJuezReg(values):
     """
     flag = True
     k = 0
-    if len(values['-IDpersonaL6-']) > 0 and len(values['-IDpersonaL6-']) <= 8: 
+    if len(values['-IDpersonaL6-']) > 0 and is_num(values['-IDpersonaL6-']): 
         k += 1
     else:
         flag = False
         
-    if len(values['-IDJuezL6-']) > 0 and len(values['-IDJuezL6-']) <= 30: 
+    if len(values['-IDJuezL6-']) > 0 and is_num(values['-IDJuezL6-']): 
         k += 1
     else :
         flag = False
@@ -335,48 +541,17 @@ def CheckUniversidadReg(values):
     """
     flag = True
     k = 0
-    if len(values['-IDPersonaL2-']) > 0 and len(values['-IDPersonaL2-']) <= 8: 
+    if len(values['-IDUniversidadL8-']) > 0 and len(values['-IDUniversidadL8-']) <= 3: 
         k += 1
     else:
         flag = False
         
-    if len(values['-Namepersona-']) > 0 and len(values['-Namepersona-']) <= 30: 
+    if len(values['-NombreUniver-']) > 0 and len(values['-NombreUniver-']) <= 50: 
         k += 1
     else :
         flag = False
         
-    if len(values[ '-ApellidoP-']) > 0 and len(values['-ApellidoP-']) <= 30: 
-        k += 1
-    else :
-        flag = False
-        
-    if len(values['-ApellidoM-']) > 0 and len(values['-ApellidoM-']) <= 30: 
-        k += 1
-    else :
-        flag = False
-        
-    if len(values['-FechaN-']) > 0 and len(values['-FechaN-']) <= 30: 
-        k += 1
-    else :
-        flag = False
-        
-        
-    if len(values['-Telpersona-']) > 0 and len(values['-Telpersona-']) <= 10: 
-        k += 1
-    else :
-        flag = False 
-    
-    if len(values['-Telpersona-']) > 0 and len(values['-Telpersona-']) <= 10: 
-        k += 1
-    else :
-        flag = False 
-        
-    if len(values['-CorreoE-']) > 0 and len(values['-CorreoE-']) <= 20: 
-        k += 1
-    else :
-        flag = False 
-    
-    if len(values['-ContryP-']) > 0:
+    if len(values[ '-RegionL8-']) > 0 and is_num(values['-RegionL8-']): 
         k += 1
     else :
         flag = False
@@ -385,105 +560,116 @@ def CheckUniversidadReg(values):
         return True
     else: 
         return False
+
+
+
+def CheckCompetenciareg(values):
+    """CheckPersona reg
+    Args:
+        values (map): contiene todos los valores del registro de una persona 
+    Returns:
+        bool: Retorna True si los datos cumplen las condiciones necesarias para agregarlos
+    """
+    flag = True
+    k = 0
+    if len(values['-IDpruebaL7-']) > 0 and is_num(values['-IDpruebaL7-']): 
+        k += 1
+    else:
+        flag = False
+        
+    if len(values['-TiempoDuracion-']) > 0 and is_num(values['-TiempoDuracion-']): 
+        k += 1
+    else :
+        flag = False
+        
+    if len(values[ '-Numproblemas-']) > 0 and is_num(values['-Numproblemas-']): 
+        k += 1
+    else :
+        flag = False
+        
+    if len(values[ '-FechaRL7-']) > 0: 
+        k += 1
+    else :
+        flag = False
+    
+    if len(values[ '-RegionL7-']) > 0: 
+        k += 1
+    else :
+        flag = False
+
+    if flag:
+        return True
+    else: 
+        return False
     
 
-def  insert_persona(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%i,%s,%s,%s,%s,%s,%s);",
-    (values['Id'],values['Nombre'],values['ApellidoP'],values['ApellidoM'],values['FechaN' ],values['Telefono' ],values['CorreoE']))
-    conexion.commit()
-    cur.close()
+def Checkproblemareg(values):
+    """CheckPersona reg
+    Args:
+        values (map): contiene todos los valores del registro de una persona 
+    Returns:
+        bool: Retorna True si los datos cumplen las condiciones necesarias para agregarlos
+    """
+    flag = True
+    k = 0
+    if len(values['-IDproblemaL9-']) > 0 and len(values['-IDproblemaL9-']) < 4: 
+        k += 1
+    else:
+        flag = False
+        
+    if len(values['-TipoL9-']) > 0 and len(values['-TipoL9-']) < 31: 
+        k += 1
+    else :
+        flag = False
+        
+    if len(values[ '-DescProblem-']) > 0 and len(values[ '-DescProblem-']) < 101: 
+        k += 1
+    else :
+        flag = False
+
+    if flag:
+        return True
+    else: 
+        return False
+    
 
 
-def  insert_Tercia(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  tercia(id_persona,id_equipo) VALUES (%s,%s);",(values['IdPersona'],values['idEqupol4']))
-    conexion.commit()
-    cur.close()
+def CheckFinalMReg(values):
+    """CheckPersona reg
+    Args:
+        values (map): contiene todos los valores del registro de una persona 
+    Returns:
+        bool: Retorna True si los datos cumplen las condiciones necesarias para agregarlos
+    """
+    flag = True
+    k = 0
+    if len(values['-IDUFinalML12-']) > 0 and is_num(values['-IDUFinalML12-']): 
+        k += 1
+    else:
+        flag = False
+        
+    if len(values['-IdCompetenciaL12-']) > 0 and len(values['-IdCompetenciaL12-']) < 4: 
+        k += 1
+    else :
+        flag = False
+        
+    if len(values['-CiudadL12-']) > 0 and len(values['-CiudadL12-']) < 51: 
+        k += 1
+    else :
+        flag = False
 
+    if len(values['-FechaRL12-']) > 0 : 
+        k += 1
+    else :
+        flag = False
 
-def  insert_equipo(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  equipo(id_equipo,nombre,cve_universidad,estatus) VALUES (%s,%s,%s,%s);",
-    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
-    conexion.commit()
-    cur.close()
+    if flag:
+        return True
+    else: 
+        return False
+    
 
-
-def  insert_equipolocal(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  equipo_local(id_equipo,code_competicion,cve_universidad) VALUES (%s,%s,%s);",
-    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver']))
-    conexion.commit()
-    cur.close()
-
-
-def  insert_equiporegional(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  equipo_regional(id_equipo,code_competicion) VALUES (%s,%s);",
-    (values['Idequipo'],values['NombreEquipo']))
-    conexion.commit()
-    cur.close()
-
-def  insert_equipomundial(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  equipo_mundial(id_final_mundial,id_equipo) VALUES (%s,%s);",
-    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
-    conexion.commit()
-    cur.close()
-
-
-def  insert_juez(values):
-    reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  juez(id_juez,id_persona,especializacion,puntuacion) VALUES (%s,%s,%s,%s);",
-    (values['IdJuez'],values['idpersona'],values['especiaslizacion'],values['puntuacion']))
-    conexion.commit()
-    cur.close()
-
-def  insert_Universidad(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  universidad(cve_universidad,nombre,id_region) VALUES (%s,%s,%s);",
-    ())
-
-def  insert_problema(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  problema(code_problema,descripcion,tipo) VALUES (%s,%s,%s);")
-    conexion.commit()
-    cur.close()
-
-
-def  insert_programa(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  programa(id_programa,code_problema,id_equipo,lenguaje_programacion,valido,tiempo_resolucion_minutos) VALUES (%s,%s,%s,%s,%s,%s);")
-    conexion.commit()
-    cur.close()
-
-
-def  insert_competencia(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  competicion(code_competicion,descripcion,duracion_hrs,fecha,no_problemas,id_region) VALUES (%s,%s,%s,%s,%s,%s);")
-    conexion.commit()
-    cur.close()
-
-
-def  insert_competecialocal(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT INTO  competicion_local(code_competicion,cve_universidad) VALUES (%s,%s);")
-    conexion.commit()
-    cur.close()
-
-def  insert_competeregional(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT ")
-    conexion.commit()
-    cur.close()
-
-def  insert_competeciamundial(values):
-    cur = conexion.cursor()
-    cur.execute("INSERT ")
-    conexion.commit()
-    cur.close()
+#{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
 
 
 
@@ -541,7 +727,7 @@ while True:
     if event == sg.WIN_CLOSED:
         break
     
-    print(event, values)
+    #print(event, values)
 #-------------------Interfaces de añadir registros -----------------------------------------------------
     #este evento nos lleva a la interfaz de añadir registros
     if event == 'AÑADIR REGISTRO':
@@ -562,6 +748,7 @@ while True:
         reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
                        'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
         insert_persona(reg_persona)
+        print(reg_persona)
         window.Element('-IDPersonaL2-').update(value="")
         window.Element('-Namepersona-').update(value="")
         window.Element('-ApellidoP-').update(value="")
@@ -581,7 +768,8 @@ while True:
     if event == '-AddregTercia-' and checkTerciaReg(values) == True:  
         values_reg = values  
         reg_tercia = {'IdPersona' : values['-IDPersonaL4-'],'idEqupol4' : values['-IDEquipoL4-'] }
-        insert_Tercia(reg_tercia)
+        #insert_Tercia(reg_tercia)
+        print(reg_tercia)
         window.Element('-IDPersonaL4-').update(value="")
         window.Element('-IDEquipoL4-').update(value="")
         
@@ -598,9 +786,10 @@ while True:
         #{'-IDequipoL5-','-Nameequipo-','-claveUnivL5-','-statusL5-'}
         values_reg = values  
         reg_equipo = {'Idequipo' : values['-IDequipoL5-'],'NombreEquipo' : values['-Nameequipo-'], 'claveUniver' : values['-claveUnivL5-'],'estatus' : values['-statusL5-']}
-        insert_equipo(reg_equipo)
+        #insert_equipo(reg_equipo)
+        print(reg_equipo)
         window.Element('-IDequipoL5-').update(value="")
-        window.Element('Nameequipo').update(value="")
+        window.Element('-Nameequipo-').update(value="")
         window.Element('-claveUnivL5-').update(value="")
         window.Element('-statusL5-').update(value="")
 
@@ -616,7 +805,7 @@ while True:
         #{IDJuezL6,IDpersonaL6,especializacionL6,puntuacionL6} 
         values_reg = values  
         reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
-        print(reg_persona)
+        print(reg_juez)
         window.Element('-IDJuezL6-').update(value="")
         window.Element('-IDpersonaL6-').update(value="")
         window.Element('-especializacionL6-').update(value="")
@@ -629,73 +818,60 @@ while True:
         window['-COL{7}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregCompetencia-' and CheckPersonaReg(values) == True:  
+    if event == '-CALL7-':
+        #print()
+        window.Element('-FechaRL7-').update(value=date(values['-CALL7-']))
+    
+    if event == '-AddregCompetencia-' and CheckCompetenciareg(values) == True:  
         values_reg = values 
         #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
-        reg_persona = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
+        reg_comp = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
                        'Region' : values['-RegionL7-']}
-        print(reg_persona)
+        print(reg_comp)
         window.Element('-IDpruebaL7-').update(value="")
         window.Element('-TiempoDuracion-').update(value="")
         window.Element('-Numproblemas-').update(value="")
         window.Element('-FechaRL7-').update(value="")
         window.find_element('-RegionL7-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
-        print("Bad")
+    elif CheckCompetenciareg(values) == False and event == '-AddregPersona-':
+        print("Error al crear el registro")
 #----------------------------------------------------------------------------------------       
-    #este evento nos lleva a la interfaz de añadir registro de una competencia
+    #este evento nos lleva a la interfaz de añadir registro de una universidad
     if event == '-UButton-':
         window['-COL{8}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregUniversidad-' and CheckPersonaReg(values) == True:
+    if event == '-AddregUniversidad-' and CheckUniversidadReg(values) == True:
         #{IDUniversidadL8,NombreUniver,RegionL8}  
         values_reg = values  
         reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 'region' : values['-RegionL8-']}
-        print(reg_persona)
+        print(reg_universidad)
         window.Element('-IDUniversidadL8-').update(value="")
         window.Element('-NombreUniver-').update(value="")
         window.find_element('-RegionL8-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
-        print("Bad")
+    elif CheckUniversidadReg(values) == False and event == '-AddregUniversidad-':
+        print("Error al crear el registro")
 #----------------------------------------------------------------------------------------    
      #este evento nos lleva a la interfaz de añadir registro de un problema
     if event == '-ProblemButton-':
         window['-COL{9}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregProblema-' and CheckPersonaReg(values) == True: 
+    if event == '-AddregProblema-' and Checkproblemareg(values) == True: 
         #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
         values_reg = values  
-        reg_persona = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
-        print(reg_persona)
+        reg_problem = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
+        print(reg_problem)
         window.Element('-IDproblemaL9-').update(value="")
         window.Element('-TipoL9-').update(value="")
         window.Element('-DescProblem-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregProblema-':
-        print("Bad")
+    elif Checkproblemareg(values) == False and event == '-AddregProblema-':
+        print("Error al crear el registro")
 #----------------------------------------------------------------------------------------    
      #este evento nos lleva a la interfaz de añadir registro de un  Equipo para una competencia(local , regional o mundial)
     if event == '-TeamCompButton-':
         window['-COL{10}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
-    
-    if event == '-AddregEquipo-' and CheckPersonaReg(values) == True:  
-        values_reg = values  
-        reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
-                       'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
-        print(reg_persona)
-        window.Element('-IDPersonaL2-').update(value="")
-        window.Element('-Namepersona-').update(value="")
-        window.Element('-ApellidoP-').update(value="")
-        window.Element('-ApellidoM-').update(value="")
-        window.Element('-FechaN-').update(value="")
-        window.Element('-Telpersona-').update(value="")
-        window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
-        print("Bad")
-
 
     
 #----------------------------------------------------------------------------------------
@@ -709,27 +885,50 @@ while True:
         window['-COL{12}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregPersona-' and CheckPersonaReg(values) == True:  
+    if event == '-CALL12-':
+        #print()
+        window.Element('-FechaRL12-').update(value=date(values['-CALL12-']))
+    
+    if event == '-AddregFinalMundial-' and CheckFinalMReg(values) == True:  
+        #{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
         values_reg = values  
-        reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
-                       'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
-        print(reg_persona)
-        window.Element('-IDPersonaL2-').update(value="")
-        window.Element('-Namepersona-').update(value="")
-        window.Element('-ApellidoP-').update(value="")
-        window.Element('-ApellidoM-').update(value="")
-        window.Element('-FechaN-').update(value="")
-        window.Element('-Telpersona-').update(value="")
-        window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
-        print("Bad")
+        reg_finalM = {'IdFinalM' : values['-IDUFinalML12-'],'Idcomp' : values['-IdCompetenciaL12-'], 'CiudadR' : values['-CiudadL12-'],'fechaR' : values['-FechaRL12-']}
+        print(reg_finalM)
+        window.Element('-IDUFinalML12-').update(value="")
+        window.Element('-IdCompetenciaL12-').update(value="")
+        window.Element('-CiudadL12-').update(value="")
+        window.Element('-FechaRL12-').update(value="")
+        
+    elif CheckFinalMReg(values) == False and event == '-AddregFinalMundial-':
+        print("Error al crear el registro")
     
 #----------------------------------------------------------------------------------------
     #este evento nos lleva a la interfaz de borrar registros
     if event == 'BORRAR REGISTRO':
         window['-COL{20}-'].update(visible=True)
         window['-COL{0}-'].update(visible=False)
+
+
+    if event == '-PButtonDelete-':
+        window['-COL{21}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+        
+    if event == '-TerButtonDelete-':
+        window['-COL{22}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+
+        
+    if event == '-TButtonDelete-':
+        window['-COL{24}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+
+    
+    if event == '-JButtonDelete-':
+        window['-COL{23}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
     
     
     
@@ -803,6 +1002,27 @@ while True:
     if event == '-returnl1L12-' and window['-COL{12}-'].visible == True:
         window['-COL{12}-'].update(visible=False)
         window['-COL{1}-'].update(visible=True)
+
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L21-' and window['-COL{21}-'].visible == True:
+        window['-COL{21}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+        #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L22-' and window['-COL{22}-'].visible == True:
+        window['-COL{22}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L23-' and window['-COL{23}-'].visible == True:
+        window['-COL{23}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L24-' and window['-COL{24}-'].visible == True:
+        window['-COL{24}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
         
         
 
@@ -816,4 +1036,4 @@ window.close() #Cerramos la ventana
 
 
 
-# C:\Users\sergi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\Scripts\pyinstaller.exe  
+# C:\Users\sergi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\Scripts\pyinstaller.exe
