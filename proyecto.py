@@ -27,7 +27,7 @@ sg.theme('LightGreen')
 #Este layout contiene los elementos del menu principal --
 layout0 = [[sg.Image('logo.png',key='logo1')],[sg.Text('ICPC',auto_size_text=True,font='Helvetica')],
         [sg.Button('AÑADIR REGISTRO',auto_size_button=True),sg.Button('BORRAR REGISTRO',auto_size_button=True)]]
-
+#----------------------------------------------------------------------------------------
 #Este layout continene las opciones para añadir elementos a la base de Datos--
 layout1 = [[sg.Button('<-', key='-returnl0L1-'),sg.Image('logo.png',key='logo2')],[sg.Text('AÑADIR UN REGISTRO A LA BASE DE DATOS',auto_size_text=True,font='Helvetica')],
         [sg.Button('Añadir Persona', key='-PButton-',auto_size_button=True)],
@@ -41,7 +41,7 @@ layout1 = [[sg.Button('<-', key='-returnl0L1-'),sg.Image('logo.png',key='logo2')
         [sg.Button('Añadir Competencia Local',auto_size_button=True,key='-LocalComp-')],
         [sg.Button('Añadir Final Mundial',auto_size_button=True,key='-WorldFinalButton-')],
         ] 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una persona
 layout2 = [[sg.Button('<-', key='-returnl1L2-'), sg.Text('AÑADIR UNA NUEVA PERSONA A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDPersonaL2-',size=(10,8))],
@@ -50,20 +50,19 @@ layout2 = [[sg.Button('<-', key='-returnl1L2-'), sg.Text('AÑADIR UNA NUEVA PERS
             sg.Text('Apellido M', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-ApellidoM-',size=(25,25))],
            [ sg.Text('Fecha de Nacimiento', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-FechaN-',size=(20,20)),sg.In(key='-CALL2-', enable_events=True, visible=False),
         sg.CalendarButton('Calendar', target='-CALL2-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDAR_', format=('%d %B, %Y'))],
-           [ sg.Text('Pais', font=('MS Sans Serif', 10, 'bold')), sg.Combo(Countries,key='-ContryP-',default_value="")],
             [sg.Text('Telefono    ', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-Telpersona-',size=(30,30))],
              [sg.Text('Correo Electronico    ', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-CorreoE-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregPersona-')]]
 
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una tercia
 layout4 = [[sg.Button('<-', key='-returnl1L4-'), sg.Text('AÑADIR UNA NUEVA TERCIA A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDPersonaL4-',size=(10,8))],
            [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDEquipoL4-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregTercia-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un eqiupo
 layout5 = [[sg.Button('<-', key='-returnl1L5-'), sg.Text('AÑADIR UN NUEVO EQUIPO A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDequipoL5-',size=(10,8))],
@@ -72,7 +71,7 @@ layout5 = [[sg.Button('<-', key='-returnl1L5-'), sg.Text('AÑADIR UN NUEVO EQUIP
            [ sg.Text('Estatus', font=('MS Sans Serif', 10, 'bold')), sg.Combo(['True','False'],key='-statusL5-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregEquipo-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un juez
 layout6 = [[sg.Button('<-', key='-returnl1L6-'), sg.Text('AÑADIR UN NUEVO JUEZ A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Juez', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDJuezL6-',size=(10,8))],
@@ -81,7 +80,7 @@ layout6 = [[sg.Button('<-', key='-returnl1L6-'), sg.Text('AÑADIR UN NUEVO JUEZ 
            [sg.Text('Puntuacion'),sg.Input(key='-puntuacionL6-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregJuez-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una competencia
 layout7 = [[sg.Button('<-', key='-returnl1L7-'), sg.Text('AÑADIR UNA NUEVA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Competicion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDpruebaL7-',size=(10,8))],
@@ -93,6 +92,7 @@ layout7 = [[sg.Button('<-', key='-returnl1L7-'), sg.Text('AÑADIR UNA NUEVA COMP
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompetencia-')]]
 
 #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una Universidad
 layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIVERSIDAD A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDUniversidadL8-',size=(10,8))],
@@ -100,6 +100,7 @@ layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIV
            [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo([' Suroeste (SWERC)','Noroeste (NWERC)'],key='-RegionL8-',size=(30,30))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregUniversidad-')]]
 #{IDUniversidadL8,NombreUniver,RegionL8}
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un problema
 layout9 = [[sg.Button('<-', key='-returnl1L9-'), sg.Text('AÑADIR UNA NUEVO PROBLEMA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDproblemaL9-',size=(10,8))],
@@ -108,7 +109,7 @@ layout9 = [[sg.Button('<-', key='-returnl1L9-'), sg.Text('AÑADIR UNA NUEVO PROB
            [sg.Multiline("",key='-DescProblem-',size=(50,8))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregProblema-')]]
 #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un equipo para competencia
 layout10 = [[sg.Button('<-', key='-returnl1L10-'), sg.Text('AÑADIR UNA NUEVO EQUIPO PARA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
             [sg.Button('Competencia Local',auto_size_button=True,key='-AddregCompetencia-')],
@@ -117,7 +118,7 @@ layout10 = [[sg.Button('<-', key='-returnl1L10-'), sg.Text('AÑADIR UNA NUEVO EQ
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompetencia-')]]
 
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de competencia local
 layout11 = [[sg.Button('<-', key='-returnl1L11-'), sg.Text('AÑADIR UNA NUEVA COMPETENCIA LOCAL A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Competencia', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDCompML11-',size=(10,8))],
@@ -127,7 +128,7 @@ layout11 = [[sg.Button('<-', key='-returnl1L11-'), sg.Text('AÑADIR UNA NUEVA CO
 
 
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de Final Mundial
 layout12 = [[sg.Button('<-', key='-returnl1L12-'), sg.Text('AÑADIR UNA NUEVA FINAL MUNDIAL A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDUFinalML12-',size=(10,8))],
@@ -137,7 +138,7 @@ layout12 = [[sg.Button('<-', key='-returnl1L12-'), sg.Text('AÑADIR UNA NUEVA FI
         sg.CalendarButton('Calendar', target='-CALL11-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDARL11_', format=('%d %B, %Y'))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregFinalMundial-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout continene las opciones para eliminar elementos a la base de Datos--
 layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2')],[sg.Text('BORRAR UN REGISTRO DE LA BASE DE DATOS',auto_size_text=True,font='Helvetica')],
         [sg.Button('Borrar registro Persona', key='-PButtonDelete-',auto_size_button=True)],
@@ -151,7 +152,7 @@ layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2
         [sg.Button('Borrar registro Final Mundial',auto_size_button=True,key='-WorldFinalButtonDelete-')]] 
 
 
-
+#----------------------------------------------------------------------------------------
 #Layout principal 
 layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layout=layout1,key='-COL{1}-',visible=False),sg.Column(layout=layout2,key='-COL{2}-',visible=False),
         sg.Column(layout=layout4,key='-COL{4}-',visible=False),sg.Column(layout=layout5,key='-COL{5}-',visible=False),sg.Column(layout=layout6,key='-COL{6}-',visible=False),
@@ -164,6 +165,21 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
 
 
 window = sg.Window(title="ICPC DATA BASE ADMIN", layout=layout,auto_size_buttons=True,auto_size_text=True,resizable=True)
+
+def is_num(value):
+    """docstring for is_num"""
+    val = True
+    try:
+        for i in value:
+            if(i == '0' or i == '1' or i == '2' or i == '3' or
+            i == '4' or  i == '5' or i == '6' or i == '7' or 
+            i == '8' or  i == '9'): 
+                continue
+            else: 
+                val = False
+    except e:
+        raise e
+    return val
 
 
 def CheckPersonaReg(values):
@@ -526,6 +542,7 @@ while True:
         break
     
     print(event, values)
+#-------------------Interfaces de añadir registros -----------------------------------------------------
     #este evento nos lleva a la interfaz de añadir registros
     if event == 'AÑADIR REGISTRO':
         window['-COL{1}-'].update(visible=True)
@@ -552,11 +569,10 @@ while True:
         window.Element('-FechaN-').update(value="")
         window.Element('-Telpersona-').update(value="")
         window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
-        print("Bad")
+        print("Error al crear el registro")
         
-        
+ #----------------------------------------------------------------------------------------       
     #este evento nos lleva a la interfaz de añadir registro de una Tercia
     if event == '-TerButton-':
         window['-COL{4}-'].update(visible=True)
@@ -570,9 +586,9 @@ while True:
         window.Element('-IDEquipoL4-').update(value="")
         
     elif checkTerciaReg(values) == False and event == '-AddregTercia-':
-        print("Bad")
+        print("Error al crear el registro")
         
-    
+#----------------------------------------------------------------------------------------    
     #este evento nos lleva a la interfaz de añadir registro de un equipo
     if event == '-TButton-':
         window['-COL{5}-'].update(visible=True)
@@ -589,8 +605,8 @@ while True:
         window.Element('-statusL5-').update(value="")
 
     elif CheckEquipoReg(values) == False and event == '-AddregEquipo-':
-        print("Bad")
-        
+        print("Error al crear el registro")
+#----------------------------------------------------------------------------------------       
     #este evento nos lleva a la interfaz de añadir registro de un juez
     if event == '-JButton-':
         window['-COL{6}-'].update(visible=True)
@@ -606,8 +622,8 @@ while True:
         window.Element('-especializacionL6-').update(value="")
         window.Element('-puntuacionL6-').update(value="")
     elif CheckJuezReg(values) == False and event == '-AddregJuez-':
-        print("Bad")
-    
+        print("Error al crear el registro")
+#----------------------------------------------------------------------------------------   
     #este evento nos lleva a la interfaz de añadir registro de una competencia
     if event == '-CButton-':
         window['-COL{7}-'].update(visible=True)
@@ -626,7 +642,7 @@ while True:
         window.find_element('-RegionL7-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
         print("Bad")
-        
+#----------------------------------------------------------------------------------------       
     #este evento nos lleva a la interfaz de añadir registro de una competencia
     if event == '-UButton-':
         window['-COL{8}-'].update(visible=True)
@@ -642,7 +658,7 @@ while True:
         window.find_element('-RegionL8-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
         print("Bad")
-    
+#----------------------------------------------------------------------------------------    
      #este evento nos lleva a la interfaz de añadir registro de un problema
     if event == '-ProblemButton-':
         window['-COL{9}-'].update(visible=True)
@@ -658,7 +674,7 @@ while True:
         window.Element('-DescProblem-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregProblema-':
         print("Bad")
-    
+#----------------------------------------------------------------------------------------    
      #este evento nos lleva a la interfaz de añadir registro de un  Equipo para una competencia(local , regional o mundial)
     if event == '-TeamCompButton-':
         window['-COL{10}-'].update(visible=True)
@@ -682,12 +698,12 @@ while True:
 
 
     
-
+#----------------------------------------------------------------------------------------
      #este evento nos lleva a la interfaz de añadir registro de una competencia local
     if event == '-LocalComp-':
         window['-COL{11}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
-    
+#----------------------------------------------------------------------------------------
      #este evento nos lleva a la interfaz de añadir registro de una Final mundial
     if event == '-WorldFinalButton-':
         window['-COL{12}-'].update(visible=True)
@@ -709,6 +725,7 @@ while True:
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
         print("Bad")
     
+#----------------------------------------------------------------------------------------
     #este evento nos lleva a la interfaz de borrar registros
     if event == 'BORRAR REGISTRO':
         window['-COL{20}-'].update(visible=True)
@@ -718,13 +735,13 @@ while True:
     
     
     
-    
+#----------------------------------------------------------------------------------------    
     #Este evento nos regresa a la interfaz principal de añadir registros
     if event == '-returnl0L1-' and window['-COL{1}-'].visible == True:
         window['-COL{1}-'].update(visible=False)
         window['-COL{0}-'].update(visible=True)
         
-        
+#----------------------------------------------------------------------------------------       
     #Este evento nos regresa a la interfaz principal de añadir registros
     if event == '-returnl0L20-' and window['-COL{20}-'].visible == True:
         window['-COL{20}-'].update(visible=False)
