@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from re import I
 import PySimpleGUI as sg
 from os import execv
 import psycopg2 as pgdb
@@ -8,7 +9,7 @@ pasword = "postgres"
 
 
 
-
+#INSERT
 def  insert_persona(values):
     try:
         conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
@@ -185,9 +186,105 @@ def  insert_competeciamundial(values):
         raise e
 
 
+#DELETE
 
 
-    
+def  delete_juez(id_juez):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM juez WHERE id_juez = %s;",(id_juez))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+def  delete_persona(id_persona):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM persona WHERE id_persona = %s;",(id_persona))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  delete_tercia(id_persona):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM tercia WHERE id_juez = %s;",(id_persona))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  delete_problema(id_problem):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM problema WHERE code_problema = %s;",(id_problem))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  delete_equipo(id_equipo):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM equipo WHERE id_equipo = %s;",(id_equipo))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  delete_universidad(id_univ):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM universidad WHERE cve_universidad = %s;",(id_univ))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+
+def  delete_FinalMundial(idFinalM):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM final_mundial WHERE id_final_mundial = %s;",(idFinalM))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+
+def  delete_competencia(id):
+    try:
+        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute("DELETE FROM competicion WHERE code_competicion = %s;",(id))
+        conexion.commit()
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+
+#PAISES  
 Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria",
             "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
             "Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada",
@@ -207,6 +304,17 @@ Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & 
             "Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo",
             "Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom",
             "United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"]
+
+
+
+#REGIONES
+regions = ["Suroeste (SWERC)","Noroeste (NWERC)","Central (CERC)","Sureste (SEERC)","Noreste (NEERC)",
+"África y Arabia (AARPC)","Sudáfrica (SAfrica)","Beijing","Coimbatore (Coim)","Kanpur (Kolkata)","Daca",
+"Kaohsiun","Manila","Seúl","Teerán","Xian","Shanghái","Yokohama","Hanói","Pacífico sur (SPacific)",
+"México y Centroamérica (CAmerica)","Caribe","Brasil","Suramérica Norte","Suramérica Sur","Pacific Northwest (PacNW)",
+"North Central (NCNA)","East Central (ECNA)","Northeastern (NENA)","Rocky Mountain (RM)","Mid-Central (MCUSA)",
+"Greater New York (GNY)","Southern California (Scal)","South Central (SCUSA)","Southeast USA (SEUSA)","Mid-Atlantic (MAUSA)",]
+
 
 sg.theme('LightGreen')
 #Este layout contiene los elementos del menu principal --
@@ -272,7 +380,7 @@ layout7 = [[sg.Button('<-', key='-returnl1L7-'), sg.Text('AÑADIR UNA NUEVA COMP
            [sg.Text('Numero de Problemas', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-Numproblemas-',size=(30,30))],
            [ sg.Text('Fecha de realizacion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-FechaRL7-',size=(20,20)),sg.In(key='-CALL7-', enable_events=True, visible=False),
         sg.CalendarButton('Calendar', target='-CALL7-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDARL7_', format=('%d %B, %Y'))],
-           [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo([' Suroeste (SWERC)','Noroeste (NWERC)'],key='-RegionL7-',size=(30,30))],
+           [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo(regions,key='-RegionL7-',size=(30,30))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompetencia-')]]
 
 #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
@@ -281,7 +389,7 @@ layout7 = [[sg.Button('<-', key='-returnl1L7-'), sg.Text('AÑADIR UNA NUEVA COMP
 layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIVERSIDAD A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDUniversidadL8-',size=(10,8))],
            [sg.Text('Nombre', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-NombreUniver-',size=(30,30))],
-           [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo([' Suroeste (SWERC)','Noroeste (NWERC)'],key='-RegionL8-',size=(30,30))],
+           [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo(regions,key='-RegionL8-',size=(30,30))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregUniversidad-')]]
 #{IDUniversidadL8,NombreUniver,RegionL8}
 #----------------------------------------------------------------------------------------
@@ -331,6 +439,7 @@ layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2
         [sg.Button('Borrar registro Tercia', key='-TerButtonDelete-',auto_size_button=True)],
         [sg.Button('Borrar registro Equipo',auto_size_button=True,key='-TButtonDelete-')],
         [sg.Button('Borrar registro Juez',auto_size_button=True,key='-JButtonDelete-')],
+
         [sg.Button('Borrar registro Competencia',auto_size_button=True,key='-CButtonDelete-')],
         [sg.Button('Borrar registro Universidad',auto_size_button=True,key='-UButtonDelete-')],
         [sg.Button('Borrar registro problema',auto_size_button=True,key='-ProblemButtonDelete-')],
@@ -361,6 +470,29 @@ layout24 = [[sg.Button('<-', key='-returnl20L24-'), sg.Text('BORRAR UN EQUIPO DE
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
 
 
+#Este layout corresponde al borrado de una competencia
+layout25 = [[sg.Button('<-', key='-returnl20L25-'), sg.Text('BORRAR UNA COMPETENCIA DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Competicion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdcomnpL25-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+
+
+#Este layout corresponde al borrado de una universidad
+layout26 = [[sg.Button('<-', key='-returnl20L26-'), sg.Text('BORRAR UNA UNIVERSIDAD DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdunivL25-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+
+
+#Este layout corresponde al borrado de un Problema 
+layout27 = [[sg.Button('<-', key='-returnl20L27-'), sg.Text('BORRAR UN PROBLEMA DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdproblemL27-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+
+
+#Este layout corresponde al borrado de una Final Mundial
+layout28 = [[sg.Button('<-', key='-returnl20L28-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
+           [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdFinalML24-',size=(10,8))],
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+
 
 #----------------------------------------------------------------------------------------
 #Layout principal 
@@ -369,7 +501,8 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
         sg.Column(layout=layout7,key='-COL{7}-',visible=False),sg.Column(layout=layout8,key='-COL{8}-',visible=False),sg.Column(layout=layout9,key='-COL{9}-',visible=False),
         sg.Column(layout=layout10,key='-COL{10}-',visible=False),sg.Column(layout=layout11,key='-COL{11}-',visible=False),sg.Column(layout=layout12,key='-COL{12}-',visible=False),
         sg.Column(layout=layout20,key='-COL{20}-',visible=False), sg.Column(layout=layout21,key='-COL{21}-',visible=False),sg.Column(layout=layout22,key='-COL{22}-',visible=False),
-        sg.Column(layout=layout23,key='-COL{23}-',visible=False),sg.Column(layout=layout24,key='-COL{24}-',visible=False),]]
+        sg.Column(layout=layout23,key='-COL{23}-',visible=False),sg.Column(layout=layout24,key='-COL{24}-',visible=False),sg.Column(layout=layout25,key='-COL{25}-',visible=False),
+        sg.Column(layout=layout26,key='-COL{26}-',visible=False),sg.Column(layout=layout27,key='-COL{27}-',visible=False),sg.Column(layout=layout28,key='-COL{28}-',visible=False),]]
 
 
 
@@ -747,7 +880,7 @@ while True:
         values_reg = values  
         reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
                        'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
-        insert_persona(reg_persona)
+        #insert_persona(reg_persona)
         print(reg_persona)
         window.Element('-IDPersonaL2-').update(value="")
         window.Element('-Namepersona-').update(value="")
@@ -805,6 +938,7 @@ while True:
         #{IDJuezL6,IDpersonaL6,especializacionL6,puntuacionL6} 
         values_reg = values  
         reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
+        #insert_juez(reg_juez)
         print(reg_juez)
         window.Element('-IDJuezL6-').update(value="")
         window.Element('-IDpersonaL6-').update(value="")
@@ -827,6 +961,7 @@ while True:
         #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
         reg_comp = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
                        'Region' : values['-RegionL7-']}
+        #insert_competencia(reg_comp)
         print(reg_comp)
         window.Element('-IDpruebaL7-').update(value="")
         window.Element('-TiempoDuracion-').update(value="")
@@ -845,6 +980,7 @@ while True:
         #{IDUniversidadL8,NombreUniver,RegionL8}  
         values_reg = values  
         reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 'region' : values['-RegionL8-']}
+        #insert_Universidad(reg_universidad)
         print(reg_universidad)
         window.Element('-IDUniversidadL8-').update(value="")
         window.Element('-NombreUniver-').update(value="")
@@ -861,6 +997,7 @@ while True:
         #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
         values_reg = values  
         reg_problem = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
+        #insert_problema(reg_problem)
         print(reg_problem)
         window.Element('-IDproblemaL9-').update(value="")
         window.Element('-TipoL9-').update(value="")
@@ -893,6 +1030,7 @@ while True:
         #{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
         values_reg = values  
         reg_finalM = {'IdFinalM' : values['-IDUFinalML12-'],'Idcomp' : values['-IdCompetenciaL12-'], 'CiudadR' : values['-CiudadL12-'],'fechaR' : values['-FechaRL12-']}
+        #insert_competeciamundial(reg_finalM)
         print(reg_finalM)
         window.Element('-IDUFinalML12-').update(value="")
         window.Element('-IdCompetenciaL12-').update(value="")
@@ -928,6 +1066,28 @@ while True:
     
     if event == '-JButtonDelete-':
         window['-COL{23}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+
+
+    if event == '-CButtonDelete-':
+        window['-COL{25}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+
+
+    if event == '-UButtonDelete-':
+        window['-COL{26}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+
+
+
+    if event == '-ProblemButtonDelete-':
+        window['-COL{27}-'].update(visible=True)
+        window['-COL{20}-'].update(visible=False)
+    
+    if event == '-WorldFinalButtonDelete-':
+        window['-COL{28}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
     
     
@@ -1022,6 +1182,29 @@ while True:
     #Este evento nos regresa a la interfaz principal de añadir registros   
     if event == '-returnl20L24-' and window['-COL{24}-'].visible == True:
         window['-COL{24}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L25-' and window['-COL{25}-'].visible == True:
+        window['-COL{25}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L26-' and window['-COL{26}-'].visible == True:
+        window['-COL{26}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L27-' and window['-COL{27}-'].visible == True:
+        window['-COL{27}-'].update(visible=False)
+        window['-COL{20}-'].update(visible=True)
+
+
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl20L28-' and window['-COL{28}-'].visible == True:
+        window['-COL{28}-'].update(visible=False)
         window['-COL{20}-'].update(visible=True)
         
         
