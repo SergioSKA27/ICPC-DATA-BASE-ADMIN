@@ -5,9 +5,6 @@ conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgre
 
 
 
-
-
-
     
 Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria",
             "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
@@ -109,7 +106,7 @@ layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIV
 layout9 = [[sg.Button('<-', key='-returnl1L9-'), sg.Text('AÑADIR UNA NUEVO PROBLEMA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDproblemaL9-',size=(10,8))],
            [sg.Text('Tipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-TipoL9-',size=(30,30))],
-           [sg.Text('Descripcion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-Numproblemas-',size=(30,30))],
+           [sg.Text('Descripcion', font=('MS Sans Serif', 10, 'bold'))],
            [sg.Multiline("",key='-DescProblem-',size=(50,8))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregProblema-')]]
 #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
@@ -304,7 +301,7 @@ def CheckJuezReg(values):
         return False
      
 
-def CheckPersonaReg(values):
+def CheckUniversidadReg(values):
     """CheckPersona reg
     Args:
         values (map): contiene todos los valores del registro de una persona 
@@ -367,53 +364,101 @@ def CheckPersonaReg(values):
 
 def  insert_persona(values):
     cur = conexion.cursor()
-    cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%i,%s,%s,%s,%s,%s,%s);")
+    cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%i,%s,%s,%s,%s,%s,%s);",
+    (values['Id'],values['Nombre'],values['ApellidoP'],values['ApellidoM'],values['FechaN' ],values['Telefono' ],values['CorreoE']))
+    conexion.commit()
+    cur.close()
 
 
 def  insert_Tercia(values):
     cur = conexion.cursor()
-    cur.execute("INSERT INTO  tercia(id_persona,id_equipo) VALUES (%s,%s);")
+    cur.execute("INSERT INTO  tercia(id_persona,id_equipo) VALUES (%s,%s);",(values['IdPersona'],values['idEqupol4']))
+    conexion.commit()
+    cur.close()
 
 
 def  insert_equipo(values):
     cur = conexion.cursor()
-    cur.execute("INSERT INTO  equipo(id_equipo,nombre,cve_universidad,estatus) VALUES (%s,%s,%s,%s);")
+    cur.execute("INSERT INTO  equipo(id_equipo,nombre,cve_universidad,estatus) VALUES (%s,%s,%s,%s);",
+    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
+    conexion.commit()
+    cur.close()
+
+
+def  insert_equipolocal(values):
+    cur = conexion.cursor()
+    cur.execute("INSERT INTO  equipo_local(id_equipo,code_competicion,cve_universidad) VALUES (%s,%s,%s);",
+    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver']))
+    conexion.commit()
+    cur.close()
+
+
+def  insert_equiporegional(values):
+    cur = conexion.cursor()
+    cur.execute("INSERT INTO  equipo_regional(id_equipo,code_competicion) VALUES (%s,%s);",
+    (values['Idequipo'],values['NombreEquipo']))
+    conexion.commit()
+    cur.close()
+
+def  insert_equipomundial(values):
+    cur = conexion.cursor()
+    cur.execute("INSERT INTO  equipo_mundial(id_final_mundial,id_equipo) VALUES (%s,%s);",
+    (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
+    conexion.commit()
+    cur.close()
 
 
 def  insert_juez(values):
+    reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
     cur = conexion.cursor()
-    cur.execute("INSERT INTO  juez(id_juez,id_persona,especializacion,puntuacion) VALUES (%s,%s,%s,%s);")
+    cur.execute("INSERT INTO  juez(id_juez,id_persona,especializacion,puntuacion) VALUES (%s,%s,%s,%s);",
+    (values['IdJuez'],values['idpersona'],values['especiaslizacion'],values['puntuacion']))
+    conexion.commit()
+    cur.close()
 
 def  insert_Universidad(values):
     cur = conexion.cursor()
-    cur.execute("INSERT INTO  universidad(cve_universidad,nombre,id_region) VALUES (%s,%s,%s);")
+    cur.execute("INSERT INTO  universidad(cve_universidad,nombre,id_region) VALUES (%s,%s,%s);",
+    ())
 
 def  insert_problema(values):
     cur = conexion.cursor()
     cur.execute("INSERT INTO  problema(code_problema,descripcion,tipo) VALUES (%s,%s,%s);")
+    conexion.commit()
+    cur.close()
 
 
 def  insert_programa(values):
     cur = conexion.cursor()
     cur.execute("INSERT INTO  programa(id_programa,code_problema,id_equipo,lenguaje_programacion,valido,tiempo_resolucion_minutos) VALUES (%s,%s,%s,%s,%s,%s);")
+    conexion.commit()
+    cur.close()
 
 
 def  insert_competencia(values):
     cur = conexion.cursor()
     cur.execute("INSERT INTO  competicion(code_competicion,descripcion,duracion_hrs,fecha,no_problemas,id_region) VALUES (%s,%s,%s,%s,%s,%s);")
+    conexion.commit()
+    cur.close()
 
 
 def  insert_competecialocal(values):
     cur = conexion.cursor()
     cur.execute("INSERT INTO  competicion_local(code_competicion,cve_universidad) VALUES (%s,%s);")
+    conexion.commit()
+    cur.close()
 
 def  insert_competeregional(values):
     cur = conexion.cursor()
     cur.execute("INSERT ")
+    conexion.commit()
+    cur.close()
 
 def  insert_competeciamundial(values):
     cur = conexion.cursor()
     cur.execute("INSERT ")
+    conexion.commit()
+    cur.close()
 
 
     
@@ -444,7 +489,7 @@ while True:
         values_reg = values  
         reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
                        'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
-        print(reg_persona)
+        insert_persona(reg_persona)
         window.Element('-IDPersonaL2-').update(value="")
         window.Element('-Namepersona-').update(value="")
         window.Element('-ApellidoP-').update(value="")
@@ -464,8 +509,8 @@ while True:
 
     if event == '-AddregTercia-' and checkTerciaReg(values) == True:  
         values_reg = values  
-        reg_persona = {'IdPersona' : values['-IDPersonaL4-'],'idEqupol4' : values['-IDEquipoL4-'] }
-        print(reg_persona)
+        reg_tercia = {'IdPersona' : values['-IDPersonaL4-'],'idEqupol4' : values['-IDEquipoL4-'] }
+        insert_Tercia(reg_tercia)
         window.Element('-IDPersonaL4-').update(value="")
         window.Element('-IDEquipoL4-').update(value="")
         
@@ -482,7 +527,7 @@ while True:
         #{'-IDequipoL5-','-Nameequipo-','-claveUnivL5-','-statusL5-'}
         values_reg = values  
         reg_equipo = {'Idequipo' : values['-IDequipoL5-'],'NombreEquipo' : values['-Nameequipo-'], 'claveUniver' : values['-claveUnivL5-'],'estatus' : values['-statusL5-']}
-        print(reg_persona)
+        insert_equipo(reg_equipo)
         window.Element('-IDequipoL5-').update(value="")
         window.Element('Nameequipo').update(value="")
         window.Element('-claveUnivL5-').update(value="")
@@ -499,7 +544,7 @@ while True:
     if event == '-AddregJuez-' and CheckJuezReg(values) == True:
         #{IDJuezL6,IDpersonaL6,especializacionL6,puntuacionL6} 
         values_reg = values  
-        reg_persona = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
+        reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
         print(reg_persona)
         window.Element('-IDJuezL6-').update(value="")
         window.Element('-IDpersonaL6-').update(value="")
@@ -513,19 +558,17 @@ while True:
         window['-COL{7}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregPersona-' and CheckPersonaReg(values) == True:  
-        values_reg = values  
-        reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
-                       'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
+    if event == '-AddregCompetencia-' and CheckPersonaReg(values) == True:  
+        values_reg = values 
+        #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
+        reg_persona = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
+                       'Region' : values['-RegionL7-']}
         print(reg_persona)
-        window.Element('-IDPersonaL2-').update(value="")
-        window.Element('-Namepersona-').update(value="")
-        window.Element('-ApellidoP-').update(value="")
-        window.Element('-ApellidoM-').update(value="")
-        window.Element('-FechaN-').update(value="")
-        window.Element('-Telpersona-').update(value="")
-        window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
+        window.Element('-IDpruebaL7-').update(value="")
+        window.Element('-TiempoDuracion-').update(value="")
+        window.Element('-Numproblemas-').update(value="")
+        window.Element('-FechaRL7-').update(value="")
+        window.find_element('-RegionL7-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
         print("Bad")
         
@@ -534,19 +577,14 @@ while True:
         window['-COL{8}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregPersona-' and CheckPersonaReg(values) == True:  
+    if event == '-AddregUniversidad-' and CheckPersonaReg(values) == True:
+        #{IDUniversidadL8,NombreUniver,RegionL8}  
         values_reg = values  
-        reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
-                       'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
+        reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 'region' : values['-RegionL8-']}
         print(reg_persona)
-        window.Element('-IDPersonaL2-').update(value="")
-        window.Element('-Namepersona-').update(value="")
-        window.Element('-ApellidoP-').update(value="")
-        window.Element('-ApellidoM-').update(value="")
-        window.Element('-FechaN-').update(value="")
-        window.Element('-Telpersona-').update(value="")
-        window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
+        window.Element('-IDUniversidadL8-').update(value="")
+        window.Element('-NombreUniver-').update(value="")
+        window.find_element('-RegionL8-').update(value="")
     elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
         print("Bad")
     
@@ -555,20 +593,15 @@ while True:
         window['-COL{9}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
     
-    if event == '-AddregProblema-' and CheckPersonaReg(values) == True:  
+    if event == '-AddregProblema-' and CheckPersonaReg(values) == True: 
+        #{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
         values_reg = values  
-        reg_persona = {'Id' : values['-IDPersonaL2-'],'Nombre' : values['-Namepersona-'], 'ApellidoP' : values['-ApellidoP-'],'ApellidoM' : values['-ApellidoM-'],
-                       'FechaN' : values['-FechaN-'],'Telefono': values['-Telpersona-'],'CorreoE' : values['-CorreoE-']}
+        reg_persona = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
         print(reg_persona)
-        window.Element('-IDPersonaL2-').update(value="")
-        window.Element('-Namepersona-').update(value="")
-        window.Element('-ApellidoP-').update(value="")
-        window.Element('-ApellidoM-').update(value="")
-        window.Element('-FechaN-').update(value="")
-        window.Element('-Telpersona-').update(value="")
-        window.Element('-CorreoE-').update(value="")
-        window.find_element('-ContryP-').update(value="")
-    elif CheckPersonaReg(values) == False and event == '-AddregPersona-':
+        window.Element('-IDproblemaL9-').update(value="")
+        window.Element('-TipoL9-').update(value="")
+        window.Element('-DescProblem-').update(value="")
+    elif CheckPersonaReg(values) == False and event == '-AddregProblema-':
         print("Bad")
     
      #este evento nos lleva a la interfaz de añadir registro de un  Equipo para una competencia(local , regional o mundial)
