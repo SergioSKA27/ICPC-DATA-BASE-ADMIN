@@ -5,14 +5,14 @@ from os import execv
 import psycopg2 as pgdb
 
 pasword = "postgres"
-
+nombredb = "proyecto"
 
 
 
 #INSERT
 def  insert_persona(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%s,%s,%s,%s,%s,%s,%s);",
         (values['Id'],values['Nombre'],values['ApellidoP'],values['ApellidoM'],values['FechaN' ],values['Telefono' ],values['CorreoE']))
@@ -25,7 +25,7 @@ def  insert_persona(values):
 
 def  insert_Tercia(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  tercia(id_persona,id_equipo) VALUES (%s,%s);",(values['IdPersona'],values['idEqupol4']))
         conexion.commit()
@@ -37,7 +37,7 @@ def  insert_Tercia(values):
 
 def  insert_equipo(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  equipo(id_equipo,nombre,cve_universidad,estatus) VALUES (%s,%s,%s,%s);",
         (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
@@ -50,7 +50,7 @@ def  insert_equipo(values):
 
 def  insert_equipolocal(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  equipo_local(id_equipo,code_competicion,cve_universidad) VALUES (%s,%s,%s);",
         (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver']))
@@ -63,7 +63,7 @@ def  insert_equipolocal(values):
 
 def  insert_equiporegional(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  equipo_regional(id_equipo,code_competicion) VALUES (%s,%s);",
         (values['Idequipo'],values['NombreEquipo']))
@@ -75,7 +75,7 @@ def  insert_equiporegional(values):
 
 def  insert_equipomundial(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  equipo_mundial(id_final_mundial,id_equipo) VALUES (%s,%s);",
         (values['Idequipo'],values['NombreEquipo'],values[ 'claveUniver'],values['estatus']))
@@ -88,7 +88,7 @@ def  insert_equipomundial(values):
 
 def  insert_juez(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         reg_juez = {'IdJuez' : values['-IDJuezL6-'],'idpersona' : values['-IDpersonaL6-'], 'especiaslizacion' : values['-especializacionL6-'],'puntuacion' : values['-puntuacionL6-']}
         cur = conexion.cursor()
         cur.execute("INSERT INTO  juez(id_juez,id_persona,especializacion,puntuacion) VALUES (%s,%s,%s,%s);",
@@ -101,7 +101,7 @@ def  insert_juez(values):
 
 def  insert_Universidad(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  universidad(cve_universidad,nombre,id_region) VALUES (%s,%s,%s);",
         (values['IdUniver'],values['Nombre'],values['region']))
@@ -115,7 +115,7 @@ def  insert_problema(values):
     try:
         reg_problem = {'IdProblem' : values['-IDproblemaL9-'],'Desc' : values['-DescProblem-'], 'Tipo' : values['-TipoL9-']}
 
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  problema(code_problema,descripcion,tipo) VALUES (%s,%s,%s);",
         (values['IdProblem'],values['Desc'],values['Tipo']))
@@ -128,7 +128,7 @@ def  insert_problema(values):
 
 def  insert_programa(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  programa(id_programa,code_problema,id_equipo,lenguaje_programacion,valido,tiempo_resolucion_minutos) VALUES (%s,%s,%s,%s,%s,%s);")
         conexion.commit()
@@ -140,7 +140,7 @@ def  insert_programa(values):
 
 def  insert_competencia(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  competicion(code_competicion,descripcion,duracion_hrs,fecha,no_problemas,id_region) VALUES (%s,%s,%s,%s,%s,%s);",
         (values['IdComp'],'Desc',values['TiempoDur'],values['Fecha'],values['numproblems'],values['Region']))
@@ -153,7 +153,7 @@ def  insert_competencia(values):
 
 def  insert_competecialocal(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  competicion_local(code_competicion,cve_universidad) VALUES (%s,%s);")
         conexion.commit()
@@ -164,7 +164,7 @@ def  insert_competecialocal(values):
 
 def  insert_competeregional(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT ")
         conexion.commit()
@@ -175,7 +175,7 @@ def  insert_competeregional(values):
 
 def  insert_competeciamundial(values):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("INSERT INTO  final_mundial(id_final_mundial,code_competicion,fecha,ciudad) VALUES (%s,%s,%s,%s);",
         (values['IdFinalM'],values['Idcomp'],values['fechaR'],values['CiudadR']))
@@ -191,7 +191,7 @@ def  insert_competeciamundial(values):
 
 def  delete_juez(id_juez):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM juez WHERE id_juez = %s;",(id_juez))
         conexion.commit()
@@ -202,7 +202,7 @@ def  delete_juez(id_juez):
 
 def  delete_persona(id_persona):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM persona WHERE id_persona = %s;",(id_persona))
         conexion.commit()
@@ -214,7 +214,7 @@ def  delete_persona(id_persona):
 
 def  delete_tercia(id_persona):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM tercia WHERE id_juez = %s;",(id_persona))
         conexion.commit()
@@ -226,7 +226,7 @@ def  delete_tercia(id_persona):
 
 def  delete_problema(id_problem):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM problema WHERE code_problema = %s;",(id_problem))
         conexion.commit()
@@ -238,7 +238,7 @@ def  delete_problema(id_problem):
 
 def  delete_equipo(id_equipo):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM equipo WHERE id_equipo = %s;",(id_equipo))
         conexion.commit()
@@ -250,7 +250,7 @@ def  delete_equipo(id_equipo):
 
 def  delete_universidad(id_univ):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM universidad WHERE cve_universidad = %s;",(id_univ))
         conexion.commit()
@@ -263,7 +263,7 @@ def  delete_universidad(id_univ):
 
 def  delete_FinalMundial(idFinalM):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM final_mundial WHERE id_final_mundial = %s;",(idFinalM))
         conexion.commit()
@@ -275,7 +275,7 @@ def  delete_FinalMundial(idFinalM):
 
 def  delete_competencia(id):
     try:
-        conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
         cur.execute("DELETE FROM competicion WHERE code_competicion = %s;",(id))
         conexion.commit()
