@@ -14,7 +14,7 @@ def  insert_persona(values):
     try:
         conexion = pgdb.connect(host="localhost",database="ProyectoFinal", user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%s,'%s','%s','%s','%s','%s','%s');",
+        cur.execute("INSERT INTO  persona(id_persona,nombre,apellido_1,apellido_2,fecha_nacimiento,telefono,correo_electronico) VALUES (%s,%s,%s,%s,%s,%s,%s);",
         (values['Id'],values['Nombre'],values['ApellidoP'],values['ApellidoM'],values['FechaN' ],values['Telefono' ],values['CorreoE']))
         conexion.commit()
         cur.close()
