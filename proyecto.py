@@ -470,6 +470,52 @@ def  insert_competeciamundial(values):
     cur.close()
 
 
+
+
+def date(d):
+    x = []
+    s = ''
+    for i in d:
+        if(i != ' ' and i != ','):
+            s += i
+        else:
+            x.append(s),
+            s = ''
+
+    if(s != ''): 
+        x.append(s)
+
+
+    if(x[1] == 'January'):
+        x[1] = 1
+    if(x[1] == 'February'):
+        x[1] = 2
+    if(x[1] == 'March'):
+        x[1] = 3
+    if(x[1] == 'April'):
+        x[1] = 4
+    if(x[1] == 'May'):
+        x[1] = 5
+    if(x[1] == 'June'):
+        x[1] = 6
+    if(x[1] == 'July'):
+        x[1] = 7
+    if(x[1] == 'August'):
+        x[1] = 8
+
+    if(x[1] == 'September'):
+        x[1] = 9
+
+    if(x[1] == 'October'):
+        x[1] = 10
+
+    if(x[1] == 'November'):
+        x[1] = 11
+    if(x[1] == 'December'):
+        x[1] = 12
+    
+    return (str(x[3])+'/'+str(x[1])+'/'+str(x[0]))
+
     
 
 # Create an event loop
@@ -491,8 +537,8 @@ while True:
         window['-COL{1}-'].update(visible=False)
     
     if event == '-CALL2-':
-        #print(values['-CALL2-'])
-        window.Element('-FechaN-').update(value=values['-CALL2-'])
+        #print()
+        window.Element('-FechaN-').update(value=date(values['-CALL2-']))
     
     if event == '-AddregPersona-' and CheckPersonaReg(values) == True:  
         values_reg = values  
