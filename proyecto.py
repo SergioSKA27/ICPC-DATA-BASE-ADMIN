@@ -473,25 +473,25 @@ layout24 = [[sg.Button('<-', key='-returnl20L24-'), sg.Text('BORRAR UN EQUIPO DE
 #Este layout corresponde al borrado de una competencia
 layout25 = [[sg.Button('<-', key='-returnl20L25-'), sg.Text('BORRAR UNA COMPETENCIA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Competicion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdcomnpL25-',size=(10,8))],
-           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteCompetencia-')]]
 
 
 #Este layout corresponde al borrado de una universidad
 layout26 = [[sg.Button('<-', key='-returnl20L26-'), sg.Text('BORRAR UNA UNIVERSIDAD DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdunivL25-',size=(10,8))],
-           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteUniversidad-')]]
 
 
 #Este layout corresponde al borrado de un Problema 
 layout27 = [[sg.Button('<-', key='-returnl20L27-'), sg.Text('BORRAR UN PROBLEMA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdproblemL27-',size=(10,8))],
-           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteProblema-')]]
 
 
 #Este layout corresponde al borrado de una Final Mundial
 layout28 = [[sg.Button('<-', key='-returnl20L28-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdFinalML24-',size=(10,8))],
-           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
+           [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteFinalM-')]]
 
 
 #----------------------------------------------------------------------------------------
@@ -1046,49 +1046,99 @@ while True:
         window['-COL{20}-'].update(visible=True)
         window['-COL{0}-'].update(visible=False)
 
-
+#----------------------------------------------------------------------------------------
     if event == '-PButtonDelete-':
         window['-COL{21}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
-
         
+    if event == '-DeletePersona-' and len(values['-IdpersonaL21-']) > 0 :
+        delete_persona(values['-IdpersonaL21-'])
+        window['-IdpersonaL21-'].update(value="")
+    else:
+        print("Error al borrar registro")
+        
+
+#----------------------------------------------------------------------------------------
     if event == '-TerButtonDelete-':
         window['-COL{22}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
-
-
         
+    if event == '-DeleteTercia-' and len(values['-IdpersonaL22-']) > 0 :
+        delete_tercia(values['-IdpersonaL22-'])
+        window['-IdpersonaL22-'].update(value="")
+    else:
+        print("Error al borrar registro")
+
+
+ #----------------------------------------------------------------------------------------       
     if event == '-TButtonDelete-':
         window['-COL{24}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
+        
+    if event == '-DeleteEquipo-' and len(values['-IdequipoL24-']) > 0 :
+        delete_equipo(values['-IdequipoL24-'])
+        window['-IdequipoL24-'].update(value="")
+    else:
+        print("Error al borrar registro")
 
 
-    
+#----------------------------------------------------------------------------------------    
     if event == '-JButtonDelete-':
         window['-COL{23}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
 
+    if event == '-DeleteJuez-' and len(values['-IdpersonaL23-']) > 0 :
+        delete_juez(values['-IdpersonaL23-'])
+        window['-IdpersonaL23-'].update(value="")
+    else:
+        print("Error al borrar registro")
 
-
+#----------------------------------------------------------------------------------------
     if event == '-CButtonDelete-':
         window['-COL{25}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
+        
+        
+    if event == '-DeleteCompetencia-' and len(values['-IdcomnpL25-']) > 0 :
+        delete_competencia(values['-IdcomnpL25-'])
+        window['-IdcomnpL25-'].update(value="")
+    else:
+        print("Error al borrar registro")
 
 
-
+#----------------------------------------------------------------------------------------
     if event == '-UButtonDelete-':
         window['-COL{26}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
+        
+
+    if event == '-DeleteUniversidad-' and len(values['-IdunivL25-']) > 0 :
+        delete_universidad(values['-IdunivL25-'])
+        window['-IdunivL25-'].update(value="")
+    else:
+        print("Error al borrar registro")
 
 
-
+#----------------------------------------------------------------------------------------
     if event == '-ProblemButtonDelete-':
         window['-COL{27}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
-    
+        
+    if event == '-DeleteProblema-' and len(values['-IdproblemL27-']) > 0 :
+        delete_problema(values['-IdproblemL27-'])
+        window['-IdproblemL27-'].update(value="")
+    else:
+        print("Error al borrar registro")
+ #----------------------------------------------------------------------------------------   
     if event == '-WorldFinalButtonDelete-':
         window['-COL{28}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
+        
+    if event == '-DeleteFinalM-' and len(values['-IdFinalML24-']) > 0 :
+        delete_FinalMundial(values['-IdFinalML24-'])
+        window['-IdFinalML24-'].update(value="")
+    else:
+        print("Error al borrar registro")
     
     
     
