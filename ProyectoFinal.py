@@ -6,7 +6,8 @@ import psycopg2 as pgdb
 import re
 import sys
 
-pasword = "AlmaDeli159"
+print('Ingrese la contraseña de la base de datos: ')
+pasword = str(input())
 nombredb = "proyectofinal"
 #insertar el nombre de la base de datos y la contraseña por ARGV
 
@@ -1351,7 +1352,7 @@ def ShowJuezCompTable():
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("SELECT * FROM juez_comppeticion;")
+        cur.execute("SELECT * FROM juez_competicion;")
         x = cur.fetchall()
         cur.close()
         conexion.close()
@@ -1471,6 +1472,28 @@ regions = ["Suroeste (SWERC)","Noroeste (NWERC)","Central (CERC)","Sureste (SEER
 "North Central (NCNA)","East Central (ECNA)","Northeastern (NENA)","Rocky Mountain (RM)","Mid-Central (MCUSA)",
 "Greater New York (GNY)","Southern California (Scal)","South Central (SCUSA)","Southeast USA (SEUSA)","Mid-Atlantic (MAUSA)",]
 
+
+def addcountries(c):
+    
+    conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
+    cur = conexion.cursor()
+    
+    for i in range(0,len(c)):
+        if len(c[i]) < 21:
+            cur.execute("INSERT INTO  pais(id_pais,nombre) VALUES (%s,%s);",
+                        (i,c[i]))
+    
+    conexion.commit()
+    cur.close()
+    conexion.close()
+    
+    
+    
+    
+
+
+#Usar esta funcion para crear la tabla pais despues comentar la linea
+#addcountries(Countries)
 
 sg.theme('LightGreen')
 #Este layout contiene los elementos del menu principal --
@@ -1603,49 +1626,49 @@ layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2
         [sg.Button('Borrar registro problema',auto_size_button=True,key='-ProblemButtonDelete-')],
         [sg.Button('Borrar registro Equipo Competencia',auto_size_button=True,key='-TeamCompButtonDelete-')],
         [sg.Button('Borrar registro Final Mundial',auto_size_button=True,key='-WorldFinalButtonDelete-')]] 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una persona
 layout21 = [[sg.Button('<-', key='-returnl20L21-'), sg.Text('BORRAR UNA PERSONA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL21-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeletePersona-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una tercia
 layout22 = [[sg.Button('<-', key='-returnl20L22-'), sg.Text('BORRAR UNA TERCIA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL22-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteTercia-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Juez
 layout23 = [[sg.Button('<-', key='-returnl20L23-'), sg.Text('BORRAR UN JUEZ DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL23-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteJuez-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Equipo
 layout24 = [[sg.Button('<-', key='-returnl20L24-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdequipoL24-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una competencia
 layout25 = [[sg.Button('<-', key='-returnl20L25-'), sg.Text('BORRAR UNA COMPETENCIA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Competicion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdcomnpL25-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteCompetencia-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una universidad
 layout26 = [[sg.Button('<-', key='-returnl20L26-'), sg.Text('BORRAR UNA UNIVERSIDAD DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdunivL25-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteUniversidad-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de un Problema 
 layout27 = [[sg.Button('<-', key='-returnl20L27-'), sg.Text('BORRAR UN PROBLEMA DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdproblemL27-',size=(10,8))],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteProblema-')]]
 
-
+#----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Final Mundial
 layout28 = [[sg.Button('<-', key='-returnl20L28-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdFinalML24-',size=(10,8))],
@@ -1653,32 +1676,128 @@ layout28 = [[sg.Button('<-', key='-returnl20L28-'), sg.Text('BORRAR UN EQUIPO DE
 
 
 
-
+#----------------------------------------------------------------------------------------
 #layaouts para tablas 
 
 layout100 = [[sg.Button('<-', key='-returnl0L100-'),sg.Image('logo.png',key='logo2')],[sg.Text('MOSTRAR REGISTROS DE LA BASE DE DATOS',auto_size_text=True,font='Helvetica')],
-        [sg.Button('registros Persona', key='-Ptable-',auto_size_button=True)],
-        [sg.Button('registros Tercia', key='-Tertable-',auto_size_button=True)],
-        [sg.Button('registros Equipo',auto_size_button=True,key='-Tertable-')],
+        [sg.Button('registros Persona', key='-Ptable-',auto_size_button=True),sg.Button('registros Pais',auto_size_button=True,key='-PaisButtontable-')],
+        [sg.Button('registros Tercia', key='-Tertable-',auto_size_button=True),sg.Button('registros Region',auto_size_button=True,key='-RegionButtontable-')],
+        [sg.Button('registros Equipo',auto_size_button=True,key='-Etable-')],
         [sg.Button('registros Juez',auto_size_button=True,key='-Jtable-')],
-        [sg.Button('registros Competencia',auto_size_button=True,key='-Ctable-')],
         [sg.Button('registros Universidad',auto_size_button=True,key='-Utable-')],
         [sg.Button('registros problema',auto_size_button=True,key='-Probtable-')],
-        [sg.Button('registros Equipo Competencia',auto_size_button=True,key='-TeamComptable-')],
+        [sg.Button('registros programa',auto_size_button=True,key='-ProgramButtontable-')],
+        [sg.Button('registros Juez Competencia',auto_size_button=True,key='-JuezComptable-')],
+        [sg.Button('registros Equipo Local',auto_size_button=True,key='-LocalEquButtontable-')],
+        [sg.Button('registros Equipo regional',auto_size_button=True,key='-RegionalEquButtontable-')],
+        [sg.Button('registros Equipo Mundial',auto_size_button=True,key='-MundialEquButtontable-')],
+        [sg.Button('registros Competencia Local',auto_size_button=True,key='-LocalCompButtontable-')],
+        [sg.Button('registros Competencia',auto_size_button=True,key='-Ctable-')],
         [sg.Button('registros Final Mundial',auto_size_button=True,key='-WorldFinalButtontable-')]] 
 
 
-
+#----------------------------------------------------------------------------------------
+#Tabla Persona
 personlst = ShowPersonaTable()#Hacemos una consulta previa 
-
-
-
 headerpersona = ['ID','NOMBRE','APELLIDO 1', 'APELLIDO 2', 'FECHA NACIMIENTO','TELEFONO','CORREO']
-layout101 = [[sg.Button('<-', key='-returnl0L100-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+layout101 = [[sg.Button('<-', key='-returnl100L101-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
              [sg.Table(personlst,max_col_width=50,key='-TablaPersona-',headings=headerpersona)]]
+#----------------------------------------------------------------------------------------
+#Tabla Tercia
+tercialst = ShowTerciaTable()#Hacemos una consulta previa 
+headertercia = ['ID Persona','ID Equipo']
+layout102 = [[sg.Button('<-', key='-returnl100L102-'), sg.Text('REGISTROS TABLA TERCIA',font='Helvetica')],
+             [sg.Table(tercialst,max_col_width=50,key='-TablaTercia-',headings=headertercia)]]
+
+#----------------------------------------------------------------------------------------
+#Tabla Juez
+juezlst = ShowJuezTable()#Hacemos una consulta previa 
+headerjuez = ['ID JUEZ','ID PERSONA','ESPECILIZACION', 'PUNTUACION']
+layout103 = [[sg.Button('<-', key='-returnl100L103-'), sg.Text('REGISTROS TABLA JUEZ',font='Helvetica')],
+             [sg.Table(juezlst,max_col_width=50,key='-TablaJuez-',headings=headerjuez)]]
+
+#----------------------------------------------------------------------------------------
+#Tabla Equipo
+equipolst = ShowEquipoTable()#Hacemos una consulta previa 
+headerequipo = ['ID','NOMBRE','CLAVE UNIVERSIDAD', 'ESTATUS']
+layout104 = [[sg.Button('<-', key='-returnl100L104-'), sg.Text('REGISTROS TABLA EQUPO',font='Helvetica')],
+             [sg.Table(equipolst,max_col_width=50,key='-TablaEquipo-',headings=headerequipo)]]
+#----------------------------------------------------------------------------------------
+#Tabla  Universidad
+Universidadlst = ShowUniversidadTable()#Hacemos una consulta previa 
+headerunviersidad = ['ID','NOMBRE','CLAVE UNIVERSIDAD', 'REGION']
+layout105 = [[sg.Button('<-', key='-returnl100L105-'), sg.Text('REGISTROS TABLA UNIVERSIDAD',font='Helvetica')],
+             [sg.Table(Universidadlst,max_col_width=50,key='-TablaUniversidad-',headings=headerunviersidad)]]
+#----------------------------------------------------------------------------------------
+#Tabla  Problema 
+problemalst = ShowProblemaTable()#Hacemos una consulta previa 
+headerproblema = ['ID','DESCRIPCION','TIPO']
+layout106 = [[sg.Button('<-', key='-returnl100L106-'), sg.Text('REGISTROS TABLA PROBLEMA',font='Helvetica')],
+             [sg.Table(problemalst,max_col_width=50,key='-TablaProblema-',headings=headerproblema)]]
+#----------------------------------------------------------------------------------------
+#Tabla  Program
+programlst = ShowprogramaTable()#Hacemos una consulta previa 
+headerprogram = ['ID','ID PROBLEMA','ID EQUIPO', 'LENGUAJE','VALIDO','TIEMPO(MIN.)' ]
+layout107 = [[sg.Button('<-', key='-returnl100L107-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+             [sg.Table(programlst,max_col_width=50,key='-TablaPrograma-',headings=headerprogram)]]
+#----------------------------------------------------------------------------------------
+#Tabla Juez Competencia
+juezcomplst = ShowJuezCompTable()#Hacemos una consulta previa 
+headerjuezcomp = ['ID','ID JUEZ','CLAVE COMPETICION']
+layout108 = [[sg.Button('<-', key='-returnl100L108-'), sg.Text('REGISTROS TABLA JUEZ COMPETICION',font='Helvetica')],
+             [sg.Table(juezcomplst,max_col_width=50,key='-TablaJuezComp-',headings=headerjuezcomp)]]
+#----------------------------------------------------------------------------------------
+#Tabla Equipo Local
+equipoloclst = ShowEquipoLocTable()#Hacemos una consulta previa 
+headerequipoloc = ['ID','CLAVE COMPETICION','CLAVE UNIVERSIDAD']
+layout109 = [[sg.Button('<-', key='-returnl100L109-'), sg.Text('REGISTROS TABLA EQUIPO LOCAL',font='Helvetica')],
+             [sg.Table(equipoloclst,max_col_width=50,key='-TablaEquipoLoc-',headings=headerequipoloc)]]
+#----------------------------------------------------------------------------------------
+#Tabla Equipo Regional
+equiporeglst = ShowEquipoRegTable()#Hacemos una consulta previa 
+headerequiporeg = ['ID EQUIPO','CLAVE COMPETICION']
+layout110 = [[sg.Button('<-', key='-returnl100L110-'), sg.Text('REGISTROS TABLA EQUIPO REGIONAL',font='Helvetica')],
+             [sg.Table(equiporeglst,max_col_width=50,key='-TablaEquipoReg-',headings=headerequiporeg)]]
+#----------------------------------------------------------------------------------------
+#Tabla Equipo Mundial
+equipomunlst = ShowEquipoMunTable()#Hacemos una consulta previa 
+headerequipomun = ['ID FINAL','ID EQUIPO']
+layout111 = [[sg.Button('<-', key='-returnl100L111-'), sg.Text('REGISTROS TABLA EQUIPO MUNDIAL',font='Helvetica')],
+             [sg.Table(equipomunlst,max_col_width=50,key='-TablaEquipoMun-',headings=headerequipomun)]]
+#----------------------------------------------------------------------------------------
+#Tabla Competicion Local
+comptloclst = ShowCompeticionLocTable()#Hacemos una consulta previa 
+headercomptloc = ['CLAVE COMPETICION','CLAVE UNIVERSIDAD']
+layout112 = [[sg.Button('<-', key='-returnl100L112-'), sg.Text('REGISTROS TABLA COMPETICION LOCAL',font='Helvetica')],
+             [sg.Table(personlst,max_col_width=50,key='-TablaCompeticionLoc-',headings=headercomptloc)]]
+#----------------------------------------------------------------------------------------
+#Tabla Competicion
+comptlst = ShowCompeticionTable()#Hacemos una consulta previa 
+headercompt = ['CLAVE COMPETICION','DESCRIPCION','DURACION(HRS)', 'FECHA','NO. PROBLEMAS','ID REGION']
+layout113 = [[sg.Button('<-', key='-returnl100L113-'), sg.Text('REGISTROS TABLA COMPETICION',font='Helvetica')],
+             [sg.Table(personlst,max_col_width=50,key='-TablaCompeticion-',headings=headercompt)]]
+#----------------------------------------------------------------------------------------
+#Tabla Final Mundial
+finalmunlst = ShowfinamundialTable()#Hacemos una consulta previa 
+headerfinalmun = ['ID','CLAVE COMPETICION','FECHA', 'CIUDAD']
+layout114 = [[sg.Button('<-', key='-returnl100L114-'), sg.Text('REGISTROS TABLA FINAL MUNDIAL',font='Helvetica')],
+             [sg.Table(finalmunlst,max_col_width=50,key='-TablaFinalMun-',headings=headerfinalmun)]]
 
 
-print(personlst)
+#----------------------------------------------------------------------------------------
+#Tabla Region
+regionlst = ShowRegionTable()#Hacemos una consulta previa 
+headerregion = ['ID','ID PAIS','NOMBRE']
+layout115 = [[sg.Button('<-', key='-returnl100L115-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+             [sg.Table(regionlst,max_col_width=50,key='-TablaRegion-',headings=headerregion)]]
+
+#----------------------------------------------------------------------------------------
+#Tabla Pais
+paislst = ShowPaisTable()#Hacemos una consulta previa 
+headerpais = ['ID','NOMBRE']
+layout116 = [[sg.Button('<-', key='-returnl100L116-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+             [sg.Table(paislst,max_col_width=50,key='-TablaPais-',headings=headerpais)]]
+
 #----------------------------------------------------------------------------------------
 #Layout principal 
 layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layout=layout1,key='-COL{1}-',visible=False),sg.Column(layout=layout2,key='-COL{2}-',visible=False),
@@ -1688,7 +1807,12 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
         sg.Column(layout=layout20,key='-COL{20}-',visible=False), sg.Column(layout=layout21,key='-COL{21}-',visible=False),sg.Column(layout=layout22,key='-COL{22}-',visible=False),
         sg.Column(layout=layout23,key='-COL{23}-',visible=False),sg.Column(layout=layout24,key='-COL{24}-',visible=False),sg.Column(layout=layout25,key='-COL{25}-',visible=False),
         sg.Column(layout=layout26,key='-COL{26}-',visible=False),sg.Column(layout=layout27,key='-COL{27}-',visible=False),sg.Column(layout=layout28,key='-COL{28}-',visible=False),
-        sg.Column(layout=layout100,key='-COL{100}-',visible=False),]]
+        sg.Column(layout=layout100,key='-COL{100}-',visible=False),sg.Column(layout=layout101,key='-COL{101}-',visible=False),sg.Column(layout=layout102,key='-COL{102}-',visible=False),
+        sg.Column(layout=layout103,key='-COL{103}-',visible=False),sg.Column(layout=layout104,key='-COL{104}-',visible=False),sg.Column(layout=layout105,key='-COL{105}-',visible=False),
+        sg.Column(layout=layout106,key='-COL{106}-',visible=False),sg.Column(layout=layout107,key='-COL{107}-',visible=False),sg.Column(layout=layout108,key='-COL{108}-',visible=False),
+        sg.Column(layout=layout109,key='-COL{109}-',visible=False),sg.Column(layout=layout110,key='-COL{110}-',visible=False),sg.Column(layout=layout111,key='-COL{111}-',visible=False),
+        sg.Column(layout=layout112,key='-COL{112}-',visible=False),sg.Column(layout=layout113,key='-COL{113}-',visible=False),sg.Column(layout=layout114,key='-COL{114}-',visible=False),
+        sg.Column(layout=layout115,key='-COL{115}-',visible=False),sg.Column(layout=layout116,key='-COL{116}-',visible=False)]]
 
 
 
@@ -1710,7 +1834,6 @@ def is_num(value):
     except:
         return None
     return val
-
 
 def CheckPersonaReg(values):
     """CheckPersona reg
@@ -1766,8 +1889,7 @@ def CheckPersonaReg(values):
         return True
     else: 
         return False
-    
-   
+      
 def checkTerciaReg(values):
     flag = True
     k = 0
@@ -1786,7 +1908,6 @@ def checkTerciaReg(values):
         return True
     else: 
         return False
-
 
 def CheckEquipoReg(values):
     """CheckPersona reg
@@ -1818,9 +1939,7 @@ def CheckEquipoReg(values):
         return True
     else: 
         return False
-   
-   
-   
+    
 def CheckJuezReg(values):
     """CheckPersona reg
     Args:
@@ -1850,7 +1969,6 @@ def CheckJuezReg(values):
     else: 
         return False
      
-
 def CheckUniversidadReg(values):
     """CheckPersona reg
     Args:
@@ -1879,8 +1997,6 @@ def CheckUniversidadReg(values):
         return True
     else: 
         return False
-
-
 
 def CheckCompetenciareg(values):
     """CheckPersona reg
@@ -1921,7 +2037,6 @@ def CheckCompetenciareg(values):
     else: 
         return False
     
-
 def Checkproblemareg(values):
     """CheckPersona reg
     Args:
@@ -1951,8 +2066,6 @@ def Checkproblemareg(values):
     else: 
         return False
     
-
-
 def CheckFinalMReg(values):
     """CheckPersona reg
     Args:
@@ -2046,7 +2159,7 @@ while True:
     if event == sg.WIN_CLOSED:
         break
     
-    #print(event, values)
+    print(event, values)
 #-------------------Interfaces de añadir registros -----------------------------------------------------
     #este evento nos lleva a la interfaz de añadir registros
     if event == 'AÑADIR REGISTRO':
@@ -2283,14 +2396,12 @@ while True:
     if event == '-CButtonDelete-':
         window['-COL{25}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
-        
-        
+           
     if event == '-DeleteCompetencia-' and len(values['-IdcomnpL25-']) > 0 :
         delete_competencia(values['-IdcomnpL25-'])
         window['-IdcomnpL25-'].update(value="")
     elif event == '-DeletePersona-':
         print("Error al borrar registro")
-
 
 #----------------------------------------------------------------------------------------
     if event == '-UButtonDelete-':
@@ -2328,11 +2439,125 @@ while True:
 #----------------------------------------------------------------------------------------
 
     if event == 'MOSTRAR TABLAS':
-        uperson = ShowPersonaTable() #Hacemos un update a los datos
-        window['-TablaPersona-'].update(values=uperson)
         window['-COL{100}-'].update(visible=True)
         window['-COL{0}-'].update(visible=False)
+     
+#----------------------------------------------------------------------------------------     
+    if event == '-Ptable-':
+        uperson = ShowPersonaTable() #Hacemos un update a los datos
+        window['-TablaPersona-'].update(values=uperson)
+        window['-COL{101}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+         
+#----------------------------------------------------------------------------------------         
+    if event == '-Tertable-':
+        utercia = ShowTerciaTable() #Hacemos un update a los datos
+        window['-TablaTercia-'].update(values=utercia)
+        window['-COL{102}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------
         
+    if event == '-Etable-':
+        uequipo = ShowEquipoLocTable() #Hacemos un update a los datos
+        window['-TablaEquipo-'].update(values=uequipo)
+        window['-COL{104}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+         
+#----------------------------------------------------------------------------------------      
+    if event == '-Jtable-':
+        ujuez = ShowJuezTable() #Hacemos un update a los datos
+        window['-TablaJuez-'].update(values=ujuez)
+        window['-COL{103}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+        
+#----------------------------------------------------------------------------------------       
+    if event == '-Utable-':
+        upuniver = ShowUniversidadTable() #Hacemos un update a los datos
+        window['-TablaUniversidad-'].update(values=upuniver)
+        window['-COL{105}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+         
+#----------------------------------------------------------------------------------------         
+    if event == '-Probtable-':
+        uproblem = ShowProblemaTable() #Hacemos un update a los datos
+        window['-TablaProblema-'].update(values=uproblem)
+        window['-COL{106}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+        
+#----------------------------------------------------------------------------------------        
+    if event == '-ProgramButtontable-':
+        uprogram = ShowprogramaTable() #Hacemos un update a los datos
+        window['-TablaPprograma-'].update(values=uprogram)
+        window['-COL{107}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+         
+#----------------------------------------------------------------------------------------         
+    if event == '-JuezComptable-':
+        ujuezcomp = ShowJuezCompTable() #Hacemos un update a los datos
+        window['-TablaJuezComp-'].update(values=ujuezcomp)
+        window['-COL{108}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+        
+#----------------------------------------------------------------------------------------        
+        
+    if event == '-LocalEquButtontable-':
+        uequloc = ShowEquipoLocTable() #Hacemos un update a los datos
+        window['-TablaEquipoLoc-'].update(values=uequloc)
+        window['-COL{109}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------         
+         
+    if event == '-RegionalEquButtontable-':
+        uequreg = ShowEquipoRegTable() #Hacemos un update a los datos
+        window['-TablaEquipoReg-'].update(values=uequreg)
+        window['-COL{110}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+        
+#----------------------------------------------------------------------------------------        
+        
+        
+    if event == '-MundialEquButtontable-':
+        uequmun = ShowEquipoMunTable() #Hacemos un update a los datos
+        window['-TablaEquipoMun-'].update(values=uequmun)
+        window['-COL{111}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+         
+#----------------------------------------------------------------------------------------         
+    if event == '-LocalCompButtontable-':
+        ulocalcomp = ShowCompeticionLocTable() #Hacemos un update a los datos
+        window['-TablaCompeticionLoc-'].update(values=ulocalcomp)
+        window['-COL{112}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------        
+        
+        
+    if event == '-Ctable-':
+        ucomp = ShowCompeticionTable() #Hacemos un update a los datos
+        window['-TablaCompeticion-'].update(values=ucomp)
+        window['-COL{113}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------        
+         
+         
+    if event == '-WorldFinalButtontable-':
+        ufinalm = ShowfinamundialTable() #Hacemos un update a los datos
+        window['-TablaFinalMun-'].update(values=ufinalm)
+        window['-COL{114}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------        
+        
+    if event == '-PaisButtontable-':
+        upais = ShowPaisTable() #Hacemos un update a los datos
+        window['-TablaPais-'].update(values=upais)
+        window['-COL{115}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
+#----------------------------------------------------------------------------------------         
+         
+    if event == '-RegionButtontable-':
+        uregion = ShowRegionTable() #Hacemos un update a los datos
+        window['-TablaRegion-'].update(values=uregion)
+        window['-COL{116}-'].update(visible=True)
+        window['-COL{100}-'].update(visible=False)
 
     
     
@@ -2456,6 +2681,99 @@ while True:
         window['-COL{100}-'].update(visible=False)
         window['-COL{0}-'].update(visible=True)
         
+     #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L101-' and window['-COL{101}-'].visible == True:
+        window['-COL{101}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L102-' and window['-COL{102}-'].visible == True:
+        window['-COL{102}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L103-' and window['-COL{103}-'].visible == True:
+        window['-COL{103}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L104-' and window['-COL{104}-'].visible == True:
+        window['-COL{104}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L105-' and window['-COL{105}-'].visible == True:
+        window['-COL{105}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L106-' and window['-COL{106}-'].visible == True:
+        window['-COL{106}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L107-' and window['-COL{107}-'].visible == True:
+        window['-COL{107}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L108-' and window['-COL{108}-'].visible == True:
+        window['-COL{108}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L109-' and window['-COL{109}-'].visible == True:
+        window['-COL{109}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L110-' and window['-COL{110}-'].visible == True:
+        window['-COL{110}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L111-' and window['-COL{111}-'].visible == True:
+        window['-COL{111}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L112-' and window['-COL{112}-'].visible == True:
+        window['-COL{112}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L113-' and window['-COL{113}-'].visible == True:
+        window['-COL{113}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L114-' and window['-COL{114}-'].visible == True:
+        window['-COL{114}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L115-' and window['-COL{115}-'].visible == True:
+        window['-COL{115}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl100L116-' and window['-COL{116}-'].visible == True:
+        window['-COL{116}-'].update(visible=False)
+        window['-COL{100}-'].update(visible=True)
+        
+    
         
 
     
