@@ -7,9 +7,11 @@ import psycopg2 as pgdb
 import re
 import sys
 
+print('Ingrese el nombre de la base de datos: ')
+nombredb = str(input())
 print('Ingrese la contraseña de la base de datos: ')
 pasword = str(input())
-nombredb = "proyectofinal"
+#nombredb = "proyectofinal"
 #insertar el nombre de la base de datos y la contraseña por ARGV
 
 SQLLNG = [
@@ -2216,7 +2218,7 @@ while True:
     if event == sg.WIN_CLOSED:
         break
     
-    print(event, values)
+    #print(event, values)
 #-------------------Interfaces de añadir registros -----------------------------------------------------
     #este evento nos lleva a la interfaz de añadir registros
     if event == 'AÑADIR REGISTRO':
