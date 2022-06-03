@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import random
 from re import I
 import PySimpleGUI as sg
 from os import execv
@@ -1238,7 +1239,7 @@ def ShowProblemaTable():
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
         cur = conexion.cursor()
-        cur.execute("SELECT * FROM persona;")
+        cur.execute("SELECT * FROM problema;")
         x = cur.fetchall()
         cur.close()
         conexion.close()
@@ -1441,6 +1442,34 @@ def ShowCompeticionLocTable():
     
     return table
 
+
+
+def ExecuteQuery(q):
+    x = []
+    desc = []
+    table = []
+    slist = []
+    try:
+        conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
+        cur = conexion.cursor()
+        cur.execute(q)
+        x = cur.fetchall()
+        desc = [desc[0] for desc in cur.description]
+        cur.close()
+        conexion.close()
+    except Exception as e:
+        raise e
+    
+    for i in range(0,len(x)):
+        table.append(list(x[i]))
+        
+    slist.append(str(desc))
+    
+    for j in table:
+        slist.append(str(j))
+        
+    return slist
+
 #PAISES  
 Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria",
             "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
@@ -1465,12 +1494,12 @@ Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & 
 
 
 #REGIONES
-regions = ["Suroeste (SWERC)","Noroeste (NWERC)","Central (CERC)","Sureste (SEERC)","Noreste (NEERC)",
-"África y Arabia (AARPC)","Sudáfrica (SAfrica)","Beijing","Coimbatore (Coim)","Kanpur (Kolkata)","Daca",
-"Kaohsiun","Manila","Seúl","Teerán","Xian","Shanghái","Yokohama","Hanói","Pacífico sur (SPacific)",
-"México y Centroamérica (CAmerica)","Caribe","Brasil","Suramérica Norte","Suramérica Sur","Pacific Northwest (PacNW)",
-"North Central (NCNA)","East Central (ECNA)","Northeastern (NENA)","Rocky Mountain (RM)","Mid-Central (MCUSA)",
-"Greater New York (GNY)","Southern California (Scal)","South Central (SCUSA)","Southeast USA (SEUSA)","Mid-Atlantic (MAUSA)",]
+regions = ["SWERC","NWERC","CERC","SEERC","NEERC",
+"AARPC","SAfrica","Beijing","Coim","Kolkata","Daca",
+"Kaohsiun","Manila","Seúl","Teerán","Xian","Shanghái","Yokohama","Hanói","SPacific",
+"CAmerica","Caribe","Brasil","Suramérica N","Suramérica S","PacNW",
+"NCNA","ECNA","NENA","Rocky Mountain","MCUSA",
+"GNY","Scal","SCUSA","SEUSA","MAUSA"]
 
 
 def addcountries(c):
@@ -1488,12 +1517,26 @@ def addcountries(c):
     conexion.close()
     
     
+def addregion(r):
+    
+    conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
+    cur = conexion.cursor()
+    
+    for i in range(0,len(r)):
+        if len(r[i]) < 21:
+            cur.execute("INSERT INTO  region(id_region,id_pais,nombre) VALUES (%s,%s,%s);",
+                        (i,random.randint(1,35),r[i]))
+    
+    conexion.commit()
+    cur.close()
+    conexion.close()
     
     
 
 
 #Usar esta funcion para crear la tabla pais despues comentar la linea
 #addcountries(Countries)
+#addregion(regions)
 
 sg.theme('LightGreen')
 #Este layout contiene los elementos del menu principal --
@@ -1542,7 +1585,7 @@ layout5 = [[sg.Button('<-', key='-returnl1L5-'), sg.Text('AÑADIR UN NUEVO EQUIP
            [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDequipoL5-',size=(10,8))],
            [sg.Text('Nombre', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-Nameequipo-',size=(30,30))],
            [ sg.Text('Clave Universidad', font=('MS Sans Serif', 10, 'bold')), sg.Input(key='-claveUnivL5-',size=(30,30))],
-           [ sg.Text('Estatus', font=('MS Sans Serif', 10, 'bold')), sg.Combo(['True','False'],key='-statusL5-',size=(30,30))],
+           [ sg.Text('Estatus', font=('MS Sans Serif', 10, 'bold')), sg.Combo(['TRUE','FALSE'],key='-statusL5-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregEquipo-')]]
 
 #----------------------------------------------------------------------------------------
@@ -1725,7 +1768,7 @@ layout104 = [[sg.Button('<-', key='-returnl100L104-'), sg.Text('REGISTROS TABLA 
 #----------------------------------------------------------------------------------------
 #Tabla  Universidad
 Universidadlst = ShowUniversidadTable()#Hacemos una consulta previa 
-headerunviersidad = ['ID','NOMBRE','CLAVE UNIVERSIDAD', 'REGION']
+headerunviersidad = ['ID','NOMBRE','REGION']
 layout105 = [[sg.Button('<-', key='-returnl100L105-'), sg.Text('REGISTROS TABLA UNIVERSIDAD',font='Helvetica')],
              [sg.Table(Universidadlst,max_col_width=50,key='-TablaUniversidad-',headings=headerunviersidad)]]
 #----------------------------------------------------------------------------------------
@@ -1782,23 +1825,27 @@ finalmunlst = ShowfinamundialTable()#Hacemos una consulta previa
 headerfinalmun = ['ID','CLAVE COMPETICION','FECHA', 'CIUDAD']
 layout114 = [[sg.Button('<-', key='-returnl100L114-'), sg.Text('REGISTROS TABLA FINAL MUNDIAL',font='Helvetica')],
              [sg.Table(finalmunlst,max_col_width=50,key='-TablaFinalMun-',headings=headerfinalmun)]]
-
-
 #----------------------------------------------------------------------------------------
 #Tabla Region
 regionlst = ShowRegionTable()#Hacemos una consulta previa 
 headerregion = ['ID','ID PAIS','NOMBRE']
-layout115 = [[sg.Button('<-', key='-returnl100L115-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+layout115 = [[sg.Button('<-', key='-returnl100L115-'), sg.Text('REGISTROS TABLA REGION',font='Helvetica')],
              [sg.Table(regionlst,max_col_width=50,key='-TablaRegion-',headings=headerregion)]]
-
 #----------------------------------------------------------------------------------------
 #Tabla Pais
 paislst = ShowPaisTable()#Hacemos una consulta previa 
 headerpais = ['ID','NOMBRE']
-layout116 = [[sg.Button('<-', key='-returnl100L116-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
+layout116 = [[sg.Button('<-', key='-returnl100L116-'), sg.Text('REGISTROS TABLA PAIS',font='Helvetica')],
              [sg.Table(paislst,max_col_width=50,key='-TablaPais-',headings=headerpais)]]
-
 #----------------------------------------------------------------------------------------
+
+qlist = []
+qheaders = ['None']
+
+layoutq = [[sg.Button('<-', key='-returnl0Lq-'), sg.Text('HACER UNA CONSULTA A LA BASE DE DATOS',font='Helvetica')],
+           [sg.Button('EJECUTAR',auto_size_button=True,key='-executequery-')],
+           [sg.Multiline("",key='-scrpitSQL-',size=(100,15))],
+           [sg.Combo(qlist,key='-TablaQuery-',size=(100,10))]]
 #Layout principal 
 layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layout=layout1,key='-COL{1}-',visible=False),sg.Column(layout=layout2,key='-COL{2}-',visible=False),
         sg.Column(layout=layout4,key='-COL{4}-',visible=False),sg.Column(layout=layout5,key='-COL{5}-',visible=False),sg.Column(layout=layout6,key='-COL{6}-',visible=False),
@@ -1812,7 +1859,7 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
         sg.Column(layout=layout106,key='-COL{106}-',visible=False),sg.Column(layout=layout107,key='-COL{107}-',visible=False),sg.Column(layout=layout108,key='-COL{108}-',visible=False),
         sg.Column(layout=layout109,key='-COL{109}-',visible=False),sg.Column(layout=layout110,key='-COL{110}-',visible=False),sg.Column(layout=layout111,key='-COL{111}-',visible=False),
         sg.Column(layout=layout112,key='-COL{112}-',visible=False),sg.Column(layout=layout113,key='-COL{113}-',visible=False),sg.Column(layout=layout114,key='-COL{114}-',visible=False),
-        sg.Column(layout=layout115,key='-COL{115}-',visible=False),sg.Column(layout=layout116,key='-COL{116}-',visible=False)]]
+        sg.Column(layout=layout115,key='-COL{115}-',visible=False),sg.Column(layout=layout116,key='-COL{116}-',visible=False),sg.Column(layout=layoutq,key='-COL{1000}-',visible=False)]]
 
 
 
@@ -1988,11 +2035,6 @@ def CheckUniversidadReg(values):
     else :
         flag = False
         
-    if len(values[ '-RegionL8-']) > 0 and is_num(values['-RegionL8-']): 
-        k += 1
-    else :
-        flag = False
-        
     if flag:
         return True
     else: 
@@ -2150,6 +2192,21 @@ def date(d):
     
     return (str(x[3])+'/'+str(x[1])+'/'+str(x[0]))
 
+def PaisId(name,pais):
+    for i in range(0,len(pais)):
+        if pais[i] == name:
+            return i
+    return 0
+       
+
+def regionId(name,reg):
+    
+    for i in range(0,len(reg)):
+        if reg[i] == name:
+            return i
+    
+    return 1
+    
     
 
 # Create an event loop
@@ -2259,7 +2316,7 @@ while True:
         values_reg = values 
         #{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
         reg_comp = {'IdComp' : values['-IDpruebaL7-'],'TiempoDur' : values['-TiempoDuracion-'], 'numproblems' : values['-Numproblemas'],'Fecha' : values['-FechaRL7-'],
-                       'Region' : values['-RegionL7-']}
+                     'Region' : regionId(values['-RegionL7-'],regions)}
         insert_competencia(reg_comp)
         print(reg_comp)
         window.Element('-IDpruebaL7-').update(value="")
@@ -2278,7 +2335,8 @@ while True:
     if event == '-AddregUniversidad-' and CheckUniversidadReg(values) == True:
         #{IDUniversidadL8,NombreUniver,RegionL8}  
         values_reg = values  
-        reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 'region' : values['-RegionL8-']}
+        reg_universidad = {'IdUniver' : values['-IDUniversidadL8-'],'Nombre' : values['-NombreUniver-'], 
+                           'region' : regionId(values['-RegionL8-'],regions)}
         insert_Universidad(reg_universidad)
         print(reg_universidad)
         window.Element('-IDUniversidadL8-').update(value="")
@@ -2458,7 +2516,7 @@ while True:
 #----------------------------------------------------------------------------------------
         
     if event == '-Etable-':
-        uequipo = ShowEquipoLocTable() #Hacemos un update a los datos
+        uequipo = ShowEquipoTable() #Hacemos un update a los datos
         window['-TablaEquipo-'].update(values=uequipo)
         window['-COL{104}-'].update(visible=True)
         window['-COL{100}-'].update(visible=False)
@@ -2549,18 +2607,28 @@ while True:
     if event == '-PaisButtontable-':
         upais = ShowPaisTable() #Hacemos un update a los datos
         window['-TablaPais-'].update(values=upais)
-        window['-COL{115}-'].update(visible=True)
+        window['-COL{116}-'].update(visible=True)
         window['-COL{100}-'].update(visible=False)
 #----------------------------------------------------------------------------------------         
          
     if event == '-RegionButtontable-':
         uregion = ShowRegionTable() #Hacemos un update a los datos
         window['-TablaRegion-'].update(values=uregion)
-        window['-COL{116}-'].update(visible=True)
+        window['-COL{115}-'].update(visible=True)
         window['-COL{100}-'].update(visible=False)
-
+#----------------------------------------------------------------------------------------
     
-    
+    if event == 'QUERY TOOL':
+        window['-COL{1000}-'].update(visible=True)
+        window['-COL{0}-'].update(visible=False)
+        
+        
+    if event == '-executequery-' and len('-scrpitSQL-') > 0:
+        quer = ExecuteQuery(values['-scrpitSQL-'])
+        window['-TablaQuery-'].update(values=quer)
+        #window['-TablaQuery-'].update(headings=quer[0])
+        window['-COL{1000}-'].update(visible=True)
+        window['-COL{0}-'].update(visible=False)
     
     
 #----------------------------------------------------------------------------------------    
@@ -2772,6 +2840,12 @@ while True:
     if event == '-returnl100L116-' and window['-COL{116}-'].visible == True:
         window['-COL{116}-'].update(visible=False)
         window['-COL{100}-'].update(visible=True)
+        
+        
+    #Este evento nos regresa a la interfaz principal de añadir registros   
+    if event == '-returnl0Lq-' and window['-COL{1000}-'].visible == True:
+        window['-COL{1000}-'].update(visible=False)
+        window['-COL{0}-'].update(visible=True)
         
     
         
