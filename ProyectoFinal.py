@@ -7,11 +7,12 @@ import psycopg2 as pgdb
 import re
 import sys
 
-print('Ingrese el nombre de la base de datos: ')
-nombredb = str(input())
-print('Ingrese la contraseña de la base de datos: ')
-pasword = str(input())
-#nombredb = "proyectofinal"
+#print('Ingrese el nombre de la base de datos: ')
+#nombredb = str(input())
+#print('Ingrese la contraseña de la base de datos: ')
+#pasword = str(input())
+nombredb = "proyectofinal"
+pasword = 'AlmaDeli159'
 #insertar el nombre de la base de datos y la contraseña por ARGV
 
 SQLLNG = [
@@ -862,7 +863,7 @@ def has_sql(cdn):
     
     return f 
             
-
+#----------------------------------------------------------------------------------------
 #INSERT
 def  insert_persona(values):
     try:
@@ -876,7 +877,6 @@ def  insert_persona(values):
     except Exception as e:
         raise e
 
-
 def  insert_Tercia(values):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
@@ -887,7 +887,6 @@ def  insert_Tercia(values):
         conexion.close()
     except Exception as e:
         raise e
-
 
 def  insert_equipo(values):
     try:
@@ -901,7 +900,6 @@ def  insert_equipo(values):
     except Exception as e:
         raise e
 
-
 def  insert_equipolocal(values):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
@@ -913,7 +911,6 @@ def  insert_equipolocal(values):
         conexion.close()
     except Exception as e:
         raise e
-
 
 def  insert_equiporegional(values):
     try:
@@ -938,7 +935,6 @@ def  insert_equipomundial(values):
         conexion.close()
     except Exception as e:
         raise e
-
 
 def  insert_juez(values):
     try:
@@ -979,7 +975,6 @@ def  insert_problema(values):
     except Exception as e: 
         raise e
 
-
 def  insert_programa(values):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
@@ -990,7 +985,6 @@ def  insert_programa(values):
         conexion.close()
     except Exception as e:
         raise e
-
 
 def  insert_competencia(values):
     try:
@@ -1003,7 +997,6 @@ def  insert_competencia(values):
         conexion.close()
     except Exception as e:
         raise e
-
 
 def  insert_competecialocal(values):
     try:
@@ -1039,10 +1032,7 @@ def  insert_competeciamundial(values):
     except Exception as e:
         raise e
 
-
 #DELETE
-
-
 def  delete_juez(id_juez):
     try:
         conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
@@ -1052,7 +1042,7 @@ def  delete_juez(id_juez):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_persona(id_persona):
     try:
@@ -1063,8 +1053,7 @@ def  delete_persona(id_persona):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_tercia(id_persona):
     try:
@@ -1075,8 +1064,7 @@ def  delete_tercia(id_persona):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_problema(id_problem):
     try:
@@ -1087,8 +1075,7 @@ def  delete_problema(id_problem):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_equipo(id_equipo):
     try:
@@ -1099,8 +1086,7 @@ def  delete_equipo(id_equipo):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_universidad(id_univ):
     try:
@@ -1111,9 +1097,7 @@ def  delete_universidad(id_univ):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_FinalMundial(idFinalM):
     try:
@@ -1124,8 +1108,7 @@ def  delete_FinalMundial(idFinalM):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
-
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
 def  delete_competencia(id):
     try:
@@ -1136,10 +1119,10 @@ def  delete_competencia(id):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
 
-
-
+#----------------------------------------------------------------------------------------
+#Funciones Para mostrar las tablas  de la base de datos 
 def ShowPersonaTable():
     x = []
     table = []
@@ -1445,8 +1428,19 @@ def ShowCompeticionLocTable():
     return table
 
 
-
+#Funcionenes Extra 
 def ExecuteQuery(q):
+    """ExecuteQuery
+
+    Args:
+        q (string): string con la consulta a realizar
+
+    Raises:
+        e: excepcion si la conexion o la consulta a la base datos falla 
+
+    Returns:
+        list: retorna una lista de strings con las tuplas obtenidas de las consultas  
+    """
     x = []
     desc = []
     table = []
@@ -1460,7 +1454,7 @@ def ExecuteQuery(q):
         cur.close()
         conexion.close()
     except Exception as e:
-        raise e
+        sg.popup(e,title='UN ERROR HA OCURRIDO :|',image='xd.png')
     
     for i in range(0,len(x)):
         table.append(list(x[i]))
@@ -1471,7 +1465,7 @@ def ExecuteQuery(q):
         slist.append(str(j))
         
     return slist
-
+#----------------------------------------------------------------------------------------
 #PAISES  
 Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria",
             "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
@@ -1493,8 +1487,6 @@ Countries = ["","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & 
             "Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom",
             "United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"]
 
-
-
 #REGIONES
 regions = ["SWERC","NWERC","CERC","SEERC","NEERC",
 "AARPC","SAfrica","Beijing","Coim","Kolkata","Daca",
@@ -1502,7 +1494,6 @@ regions = ["SWERC","NWERC","CERC","SEERC","NEERC",
 "CAmerica","Caribe","Brasil","Suramérica N","Suramérica S","PacNW",
 "NCNA","ECNA","NENA","Rocky Mountain","MCUSA",
 "GNY","Scal","SCUSA","SEUSA","MAUSA"]
-
 
 def addcountries(c):
     
@@ -1517,8 +1508,7 @@ def addcountries(c):
     conexion.commit()
     cur.close()
     conexion.close()
-    
-    
+        
 def addregion(r):
     
     conexion = pgdb.connect(host="localhost",database=nombredb, user="postgres", password=pasword)#conectamos la base de datos
@@ -1540,6 +1530,63 @@ def addregion(r):
 #addcountries(Countries)
 #addregion(regions)
 
+
+#----------------------------------------------------------------------------------------
+#Consultas previas para todas  las tablas 
+
+#Persona
+personlst = ShowPersonaTable()#Hacemos una consulta previa 
+headerpersona = ['ID','NOMBRE','APELLIDO 1', 'APELLIDO 2', 'FECHA NACIMIENTO','TELEFONO','CORREO']
+#tecia 
+tercialst = ShowTerciaTable()#Hacemos una consulta previa 
+headertercia = ['ID Persona','ID Equipo']
+#juez
+juezlst = ShowJuezTable()#Hacemos una consulta previa 
+headerjuez = ['ID JUEZ','ID PERSONA','ESPECILIZACION', 'PUNTUACION']
+#equipo
+equipolst = ShowEquipoTable()#Hacemos una consulta previa 
+headerequipo = ['ID','NOMBRE','CLAVE UNIVERSIDAD', 'ESTATUS']
+#uniersidad
+Universidadlst = ShowUniversidadTable()#Hacemos una consulta previa 
+headerunviersidad = ['ID','NOMBRE','REGION']
+#problema 
+problemalst = ShowProblemaTable()#Hacemos una consulta previa 
+headerproblema = ['ID','DESCRIPCION','TIPO']
+#programa 
+programlst = ShowprogramaTable()#Hacemos una consulta previa 
+headerprogram = ['ID','ID PROBLEMA','ID EQUIPO', 'LENGUAJE','VALIDO','TIEMPO(MIN.)' ]
+#juez competcion
+juezcomplst = ShowJuezCompTable()#Hacemos una consulta previa 
+headerjuezcomp = ['ID','ID JUEZ','CLAVE COMPETICION']
+#equipo local
+equipoloclst = ShowEquipoLocTable()#Hacemos una consulta previa 
+headerequipoloc = ['ID','CLAVE COMPETICION','CLAVE UNIVERSIDAD']
+#equipo regional
+equiporeglst = ShowEquipoRegTable()#Hacemos una consulta previa 
+headerequiporeg = ['ID EQUIPO','CLAVE COMPETICION']
+#equipo mundial
+equipomunlst = ShowEquipoMunTable()#Hacemos una consulta previa 
+headerequipomun = ['ID FINAL','ID EQUIPO']
+#competicion local
+comptloclst = ShowCompeticionLocTable()#Hacemos una consulta previa 
+headercomptloc = ['CLAVE COMPETICION','CLAVE UNIVERSIDAD']
+#competicion
+comptlst = ShowCompeticionTable()#Hacemos una consulta previa 
+headercompt = ['CLAVE COMPETICION','DESCRIPCION','DURACION(HRS)', 'FECHA','NO. PROBLEMAS','ID REGION']
+#final mundial
+finalmunlst = ShowfinamundialTable()#Hacemos una consulta previa 
+headerfinalmun = ['ID','CLAVE COMPETICION','FECHA', 'CIUDAD']
+#region
+regionlst = ShowRegionTable()#Hacemos una consulta previa 
+headerregion = ['ID','ID PAIS','NOMBRE']
+#pais 
+paislst = ShowPaisTable()#Hacemos una consulta previa 
+headerpais = ['ID','NOMBRE']
+
+
+
+#----------------------------------------------------------------------------------------
+#LAYOUTS 
 sg.theme('LightGreen')
 #Este layout contiene los elementos del menu principal --
 layout0 = [[sg.Image('logo.png',key='logo1')],[sg.Text('ICPC',auto_size_text=True,font='Helvetica')],
@@ -1572,7 +1619,6 @@ layout2 = [[sg.Button('<-', key='-returnl1L2-'), sg.Text('AÑADIR UNA NUEVA PERS
             [sg.Text('Telefono    ', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-Telpersona-',size=(30,30))],
              [sg.Text('Correo Electronico    ', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-CorreoE-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregPersona-')]]
-
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una tercia
@@ -1610,7 +1656,6 @@ layout7 = [[sg.Button('<-', key='-returnl1L7-'), sg.Text('AÑADIR UNA NUEVA COMP
            [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo(regions,key='-RegionL7-',size=(30,30))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompetencia-')]]
 
-#{IDpruebaL7,TiempoDuracion,Numproblemas,FechaRL7,RegionL7}
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de una Universidad
 layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIVERSIDAD A LA BASE DE DATOS',font='Helvetica')],
@@ -1618,7 +1663,7 @@ layout8 = [[sg.Button('<-', key='-returnl1L8-'), sg.Text('AÑADIR UNA NUEVA UNIV
            [sg.Text('Nombre', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-NombreUniver-',size=(30,30))],
            [ sg.Text('Region', font=('MS Sans Serif', 10, 'bold')), sg.Combo(regions,key='-RegionL8-',size=(30,30))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregUniversidad-')]]
-#{IDUniversidadL8,NombreUniver,RegionL8}
+
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un problema
 layout9 = [[sg.Button('<-', key='-returnl1L9-'), sg.Text('AÑADIR UNA NUEVO PROBLEMA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
@@ -1627,7 +1672,7 @@ layout9 = [[sg.Button('<-', key='-returnl1L9-'), sg.Text('AÑADIR UNA NUEVO PROB
            [sg.Text('Descripcion', font=('MS Sans Serif', 10, 'bold'))],
            [sg.Multiline("",key='-DescProblem-',size=(50,8))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregProblema-')]]
-#{IDproblemaL9,TipoL9,Numproblemas,DescProblem}
+
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de un equipo para competencia
 layout10 = [[sg.Button('<-', key='-returnl1L10-'), sg.Text('AÑADIR UNA NUEVO EQUIPO PARA COMPETENCIA A LA BASE DE DATOS',font='Helvetica')],
@@ -1636,16 +1681,12 @@ layout10 = [[sg.Button('<-', key='-returnl1L10-'), sg.Text('AÑADIR UNA NUEVO EQ
             [sg.Button('Competencia Mundial',auto_size_button=True,key='-AddregCompetencia-')],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompetencia-')]]
 
-
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de competencia local
 layout11 = [[sg.Button('<-', key='-returnl1L11-'), sg.Text('AÑADIR UNA NUEVA COMPETENCIA LOCAL A LA BASE DE DATOS',font='Helvetica')],
            [sg.Text('ID Competencia', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IDCompML11-',size=(10,8))],
            [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IduniverL11-',size=(30,30))],
            [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregCompLocal-')]]
-
-
-
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al registro de Final Mundial
@@ -1656,8 +1697,6 @@ layout12 = [[sg.Button('<-', key='-returnl1L12-'), sg.Text('AÑADIR UNA NUEVA FI
            [ sg.Text('Fecha de realizacion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-FechaRL12-',size=(20,20)),sg.In(key='-CALL12-', enable_events=True, visible=False),
         sg.CalendarButton('Calendar', target='-CALL12-', pad=None, font=('MS Sans Serif', 10, 'bold'),button_color=('black', 'white'), key='_CALENDARL12_', format=('%d %B, %Y'))],
             [sg.Button('Añadir Registro',auto_size_button=True,key='-AddregFinalMundial-')]]
-
-#{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
 
 #----------------------------------------------------------------------------------------
 #Este layout continene las opciones para eliminar elementos a la base de Datos--
@@ -1674,52 +1713,50 @@ layout20 = [[sg.Button('<-', key='-returnl0L20-'),sg.Image('logo.png',key='logo2
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una persona
 layout21 = [[sg.Button('<-', key='-returnl20L21-'), sg.Text('BORRAR UNA PERSONA DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL21-',size=(10,8))],
+           [sg.Table(personlst,max_col_width=50,key='-TablaPersonaL21-',headings=headerpersona)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeletePersona-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una tercia
 layout22 = [[sg.Button('<-', key='-returnl20L22-'), sg.Text('BORRAR UNA TERCIA DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL22-',size=(10,8))],
+            [sg.Table(tercialst,max_col_width=50,key='-TablaTerciaL22-',headings=headertercia)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteTercia-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Juez
 layout23 = [[sg.Button('<-', key='-returnl20L23-'), sg.Text('BORRAR UN JUEZ DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Persona', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdpersonaL23-',size=(10,8))],
+           [sg.Table(juezlst,max_col_width=50,key='-TablaJuezL23-',headings=headerjuez)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteJuez-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Equipo
 layout24 = [[sg.Button('<-', key='-returnl20L24-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Equipo', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdequipoL24-',size=(10,8))],
+           [sg.Table(equipolst,max_col_width=50,key='-TablaEquipoL24-',headings=headerequipo)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteEquipo-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una competencia
 layout25 = [[sg.Button('<-', key='-returnl20L25-'), sg.Text('BORRAR UNA COMPETENCIA DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Competicion', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdcomnpL25-',size=(10,8))],
+           [sg.Table(comptlst,max_col_width=50,key='-TablaCompeticionL25-',headings=headercompt)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteCompetencia-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una universidad
 layout26 = [[sg.Button('<-', key='-returnl20L26-'), sg.Text('BORRAR UNA UNIVERSIDAD DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Universidad', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdunivL25-',size=(10,8))],
+           [sg.Table(Universidadlst,max_col_width=50,key='-TablaUniversidadL26-',headings=headerunviersidad)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteUniversidad-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de un Problema 
 layout27 = [[sg.Button('<-', key='-returnl20L27-'), sg.Text('BORRAR UN PROBLEMA DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Problema', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdproblemL27-',size=(10,8))],
+           [sg.Table(problemalst,max_col_width=50,key='-TablaProblemaL27-',headings=headerproblema)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteProblema-')]]
 
 #----------------------------------------------------------------------------------------
 #Este layout corresponde al borrado de una Final Mundial
 layout28 = [[sg.Button('<-', key='-returnl20L28-'), sg.Text('BORRAR UN EQUIPO DE LA BASE DE DATOS',font='Helvetica')],
-           [sg.Text('ID Final Mundial', font=('MS Sans Serif', 10, 'bold')),sg.Input(key='-IdFinalML24-',size=(10,8))],
+            [sg.Table(finalmunlst,max_col_width=50,key='-TablaFinalMunL28-',headings=headerfinalmun)],
            [sg.Button('Borrar Registro',auto_size_button=True,key='-DeleteFinalM-')]]
-
-
 
 #----------------------------------------------------------------------------------------
 #layaouts para tablas 
@@ -1740,107 +1777,72 @@ layout100 = [[sg.Button('<-', key='-returnl0L100-'),sg.Image('logo.png',key='log
         [sg.Button('registros Competencia',auto_size_button=True,key='-Ctable-')],
         [sg.Button('registros Final Mundial',auto_size_button=True,key='-WorldFinalButtontable-')]] 
 
-
 #----------------------------------------------------------------------------------------
 #Tabla Persona
-personlst = ShowPersonaTable()#Hacemos una consulta previa 
-headerpersona = ['ID','NOMBRE','APELLIDO 1', 'APELLIDO 2', 'FECHA NACIMIENTO','TELEFONO','CORREO']
 layout101 = [[sg.Button('<-', key='-returnl100L101-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
              [sg.Table(personlst,max_col_width=50,key='-TablaPersona-',headings=headerpersona)]]
 #----------------------------------------------------------------------------------------
 #Tabla Tercia
-tercialst = ShowTerciaTable()#Hacemos una consulta previa 
-headertercia = ['ID Persona','ID Equipo']
 layout102 = [[sg.Button('<-', key='-returnl100L102-'), sg.Text('REGISTROS TABLA TERCIA',font='Helvetica')],
              [sg.Table(tercialst,max_col_width=50,key='-TablaTercia-',headings=headertercia)]]
-
 #----------------------------------------------------------------------------------------
 #Tabla Juez
-juezlst = ShowJuezTable()#Hacemos una consulta previa 
-headerjuez = ['ID JUEZ','ID PERSONA','ESPECILIZACION', 'PUNTUACION']
 layout103 = [[sg.Button('<-', key='-returnl100L103-'), sg.Text('REGISTROS TABLA JUEZ',font='Helvetica')],
              [sg.Table(juezlst,max_col_width=50,key='-TablaJuez-',headings=headerjuez)]]
-
 #----------------------------------------------------------------------------------------
 #Tabla Equipo
-equipolst = ShowEquipoTable()#Hacemos una consulta previa 
-headerequipo = ['ID','NOMBRE','CLAVE UNIVERSIDAD', 'ESTATUS']
 layout104 = [[sg.Button('<-', key='-returnl100L104-'), sg.Text('REGISTROS TABLA EQUPO',font='Helvetica')],
              [sg.Table(equipolst,max_col_width=50,key='-TablaEquipo-',headings=headerequipo)]]
 #----------------------------------------------------------------------------------------
 #Tabla  Universidad
-Universidadlst = ShowUniversidadTable()#Hacemos una consulta previa 
-headerunviersidad = ['ID','NOMBRE','REGION']
 layout105 = [[sg.Button('<-', key='-returnl100L105-'), sg.Text('REGISTROS TABLA UNIVERSIDAD',font='Helvetica')],
              [sg.Table(Universidadlst,max_col_width=50,key='-TablaUniversidad-',headings=headerunviersidad)]]
 #----------------------------------------------------------------------------------------
 #Tabla  Problema 
-problemalst = ShowProblemaTable()#Hacemos una consulta previa 
-headerproblema = ['ID','DESCRIPCION','TIPO']
 layout106 = [[sg.Button('<-', key='-returnl100L106-'), sg.Text('REGISTROS TABLA PROBLEMA',font='Helvetica')],
              [sg.Table(problemalst,max_col_width=50,key='-TablaProblema-',headings=headerproblema)]]
 #----------------------------------------------------------------------------------------
 #Tabla  Program
-programlst = ShowprogramaTable()#Hacemos una consulta previa 
-headerprogram = ['ID','ID PROBLEMA','ID EQUIPO', 'LENGUAJE','VALIDO','TIEMPO(MIN.)' ]
 layout107 = [[sg.Button('<-', key='-returnl100L107-'), sg.Text('REGISTROS TABLA PERSONA',font='Helvetica')],
              [sg.Table(programlst,max_col_width=50,key='-TablaPrograma-',headings=headerprogram)]]
 #----------------------------------------------------------------------------------------
 #Tabla Juez Competencia
-juezcomplst = ShowJuezCompTable()#Hacemos una consulta previa 
-headerjuezcomp = ['ID','ID JUEZ','CLAVE COMPETICION']
 layout108 = [[sg.Button('<-', key='-returnl100L108-'), sg.Text('REGISTROS TABLA JUEZ COMPETICION',font='Helvetica')],
              [sg.Table(juezcomplst,max_col_width=50,key='-TablaJuezComp-',headings=headerjuezcomp)]]
 #----------------------------------------------------------------------------------------
 #Tabla Equipo Local
-equipoloclst = ShowEquipoLocTable()#Hacemos una consulta previa 
-headerequipoloc = ['ID','CLAVE COMPETICION','CLAVE UNIVERSIDAD']
 layout109 = [[sg.Button('<-', key='-returnl100L109-'), sg.Text('REGISTROS TABLA EQUIPO LOCAL',font='Helvetica')],
              [sg.Table(equipoloclst,max_col_width=50,key='-TablaEquipoLoc-',headings=headerequipoloc)]]
 #----------------------------------------------------------------------------------------
 #Tabla Equipo Regional
-equiporeglst = ShowEquipoRegTable()#Hacemos una consulta previa 
-headerequiporeg = ['ID EQUIPO','CLAVE COMPETICION']
 layout110 = [[sg.Button('<-', key='-returnl100L110-'), sg.Text('REGISTROS TABLA EQUIPO REGIONAL',font='Helvetica')],
              [sg.Table(equiporeglst,max_col_width=50,key='-TablaEquipoReg-',headings=headerequiporeg)]]
 #----------------------------------------------------------------------------------------
 #Tabla Equipo Mundial
-equipomunlst = ShowEquipoMunTable()#Hacemos una consulta previa 
-headerequipomun = ['ID FINAL','ID EQUIPO']
 layout111 = [[sg.Button('<-', key='-returnl100L111-'), sg.Text('REGISTROS TABLA EQUIPO MUNDIAL',font='Helvetica')],
              [sg.Table(equipomunlst,max_col_width=50,key='-TablaEquipoMun-',headings=headerequipomun)]]
 #----------------------------------------------------------------------------------------
 #Tabla Competicion Local
-comptloclst = ShowCompeticionLocTable()#Hacemos una consulta previa 
-headercomptloc = ['CLAVE COMPETICION','CLAVE UNIVERSIDAD']
 layout112 = [[sg.Button('<-', key='-returnl100L112-'), sg.Text('REGISTROS TABLA COMPETICION LOCAL',font='Helvetica')],
-             [sg.Table(personlst,max_col_width=50,key='-TablaCompeticionLoc-',headings=headercomptloc)]]
+             [sg.Table(comptloclst,max_col_width=50,key='-TablaCompeticionLoc-',headings=headercomptloc)]]
 #----------------------------------------------------------------------------------------
 #Tabla Competicion
-comptlst = ShowCompeticionTable()#Hacemos una consulta previa 
-headercompt = ['CLAVE COMPETICION','DESCRIPCION','DURACION(HRS)', 'FECHA','NO. PROBLEMAS','ID REGION']
 layout113 = [[sg.Button('<-', key='-returnl100L113-'), sg.Text('REGISTROS TABLA COMPETICION',font='Helvetica')],
-             [sg.Table(personlst,max_col_width=50,key='-TablaCompeticion-',headings=headercompt)]]
+             [sg.Table(comptlst,max_col_width=50,key='-TablaCompeticion-',headings=headercompt)]]
 #----------------------------------------------------------------------------------------
 #Tabla Final Mundial
-finalmunlst = ShowfinamundialTable()#Hacemos una consulta previa 
-headerfinalmun = ['ID','CLAVE COMPETICION','FECHA', 'CIUDAD']
 layout114 = [[sg.Button('<-', key='-returnl100L114-'), sg.Text('REGISTROS TABLA FINAL MUNDIAL',font='Helvetica')],
              [sg.Table(finalmunlst,max_col_width=50,key='-TablaFinalMun-',headings=headerfinalmun)]]
 #----------------------------------------------------------------------------------------
 #Tabla Region
-regionlst = ShowRegionTable()#Hacemos una consulta previa 
-headerregion = ['ID','ID PAIS','NOMBRE']
 layout115 = [[sg.Button('<-', key='-returnl100L115-'), sg.Text('REGISTROS TABLA REGION',font='Helvetica')],
              [sg.Table(regionlst,max_col_width=50,key='-TablaRegion-',headings=headerregion)]]
 #----------------------------------------------------------------------------------------
 #Tabla Pais
-paislst = ShowPaisTable()#Hacemos una consulta previa 
-headerpais = ['ID','NOMBRE']
 layout116 = [[sg.Button('<-', key='-returnl100L116-'), sg.Text('REGISTROS TABLA PAIS',font='Helvetica')],
              [sg.Table(paislst,max_col_width=50,key='-TablaPais-',headings=headerpais)]]
 #----------------------------------------------------------------------------------------
-
+#Layout para realizar consultas 
 qlist = []
 qheaders = ['None']
 
@@ -1848,6 +1850,7 @@ layoutq = [[sg.Button('<-', key='-returnl0Lq-'), sg.Text('HACER UNA CONSULTA A L
            [sg.Button('EJECUTAR',auto_size_button=True,key='-executequery-')],
            [sg.Multiline("",key='-scrpitSQL-',size=(100,15))],
            [sg.Combo(qlist,key='-TablaQuery-',size=(100,10))]]
+#----------------------------------------------------------------------------------------
 #Layout principal 
 layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layout=layout1,key='-COL{1}-',visible=False),sg.Column(layout=layout2,key='-COL{2}-',visible=False),
         sg.Column(layout=layout4,key='-COL{4}-',visible=False),sg.Column(layout=layout5,key='-COL{5}-',visible=False),sg.Column(layout=layout6,key='-COL{6}-',visible=False),
@@ -1862,13 +1865,10 @@ layout = [[sg.Column(layout=layout0,key='-COL{0}-',visible=True),sg.Column(layou
         sg.Column(layout=layout109,key='-COL{109}-',visible=False),sg.Column(layout=layout110,key='-COL{110}-',visible=False),sg.Column(layout=layout111,key='-COL{111}-',visible=False),
         sg.Column(layout=layout112,key='-COL{112}-',visible=False),sg.Column(layout=layout113,key='-COL{113}-',visible=False),sg.Column(layout=layout114,key='-COL{114}-',visible=False),
         sg.Column(layout=layout115,key='-COL{115}-',visible=False),sg.Column(layout=layout116,key='-COL{116}-',visible=False),sg.Column(layout=layoutq,key='-COL{1000}-',visible=False)]]
-
-
-
-
-
+#Ventana
 window = sg.Window(title="ICPC DATA BASE ADMIN", layout=layout,auto_size_buttons=True,auto_size_text=True,resizable=True)
-
+#----------------------------------------------------------------------------------------
+#Funciones para comprobar la validez de un registro
 def is_num(value):
     """docstring for is_num"""
     val = True
@@ -2144,12 +2144,6 @@ def CheckFinalMReg(values):
     else: 
         return False
     
-
-#{IDUFinalML12,IdCompetenciaL12,CiudadL11,FechaRL12}
-
-
-
-
 def date(d):
     x = []
     s = ''
@@ -2200,7 +2194,6 @@ def PaisId(name,pais):
             return i
     return 0
        
-
 def regionId(name,reg):
     
     for i in range(0,len(reg)):
@@ -2210,7 +2203,7 @@ def regionId(name,reg):
     return 1
     
     
-
+#----------------------------------------------------------------------------------------
 # Create an event loop
 while True:
     event, values = window.read()#Captura los eventos y los valores de los elementos
@@ -2368,8 +2361,7 @@ while True:
     if event == '-TeamCompButton-':
         window['-COL{10}-'].update(visible=True)
         window['-COL{1}-'].update(visible=False)
-
-    
+ 
 #----------------------------------------------------------------------------------------
      #este evento nos lleva a la interfaz de añadir registro de una competencia local
     if event == '-LocalComp-':
@@ -2407,94 +2399,126 @@ while True:
 
 #----------------------------------------------------------------------------------------
     if event == '-PButtonDelete-':
+        uperson = ShowPersonaTable() #Hacemos un update a los datos
+        window['-TablaPersonaL21-'].update(values=uperson)
         window['-COL{21}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
-    if event == '-DeletePersona-' and len(values['-IdpersonaL21-']) > 0 :
-        delete_persona(values['-IdpersonaL21-'])
-        window['-IdpersonaL21-'].update(value="")
+    if event == '-DeletePersona-' and len(str(values['-TablaPersonaL21-'])) > 0:
+        idp = uperson[int(str(values['-TablaPersonaL21-'])[1])]
+        delete_persona(idp[0])
+        uperson = ShowPersonaTable() #Hacemos un update a los datos
+        window['-TablaPersonaL21-'].update(values=uperson)
     elif event == '-DeletePersona-':
         print("Error al borrar registro")
         
 
 #----------------------------------------------------------------------------------------
     if event == '-TerButtonDelete-':
+        utercia = ShowTerciaTable() #Hacemos un update a los datos
+        window['-TablaTerciaL22-'].update(values=utercia)
         window['-COL{22}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
-    if event == '-DeleteTercia-' and len(values['-IdpersonaL22-']) > 0 :
-        delete_tercia(values['-IdpersonaL22-'])
-        window['-IdpersonaL22-'].update(value="")
-    elif event == '-DeletePersona-':
+    if event == '-DeleteTercia-' and len(str(values['-TablaTerciaL22-'])) > 0 :
+        print(values['-TablaTerciaL22-'])
+        idt = utercia[int(str(values['-TablaTerciaL22-'])[1])]
+        delete_tercia(idt[0])
+        utercia = ShowTerciaTable() #Hacemos un update a los datos
+    elif event == '-DeleteTercia-':
         print("Error al borrar registro")
 
 
  #----------------------------------------------------------------------------------------       
     if event == '-TButtonDelete-':
+        uequipo = ShowEquipoTable() #Hacemos un update a los datos
+        window['-TablaEquipoL24-'].update(values=uequipo)
         window['-COL{24}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
-    if event == '-DeleteEquipo-' and len(values['-IdequipoL24-']) > 0 :
-        delete_equipo(values['-IdequipoL24-'])
-        window['-IdequipoL24-'].update(value="")
-    elif event == '-DeletePersona-':
+    if event == '-DeleteEquipo-' and len(str(values['-TablaEquipoL24-'])) > 0 :
+        idE = uequipo[int(str(values['-TablaEquipoL24-'])[1])]
+        delete_equipo(idE)
+        uequipo = ShowEquipoTable() #Hacemos un update a los datos
+        window['-TablaEquipoL24-'].update(values=uequipo)
+    elif event == '-DeleteEquipo-':
         print("Error al borrar registro")
 
 
 #----------------------------------------------------------------------------------------    
     if event == '-JButtonDelete-':
+        ujuez = ShowJuezTable() #Hacemos un update a los datos
+        window['-TablaJuezL23-'].update(values=ujuez)
         window['-COL{23}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
 
-    if event == '-DeleteJuez-' and len(values['-IdpersonaL23-']) > 0 :
+    if event == '-DeleteJuez-' and len(str(values['-TablaJuezL23-'])) > 0 :
+        idJ = ujuez[int(str(values['-TablaJuezL23-'])[1])]
         delete_juez(values['-IdpersonaL23-'])
-        window['-IdpersonaL23-'].update(value="")
-    elif event == '-DeletePersona-':
+        ujuez = ShowJuezTable() #Hacemos un update a los datos
+        window['-TablaJuezL23-'].update(values=ujuez)
+    elif event == '-DeleteJuez-':
         print("Error al borrar registro")
 
 #----------------------------------------------------------------------------------------
     if event == '-CButtonDelete-':
+        ucomp = ShowCompeticionTable() #Hacemos un update a los datos
+        window['-TablaCompeticionL25-'].update(values=ucomp)
         window['-COL{25}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
            
     if event == '-DeleteCompetencia-' and len(values['-IdcomnpL25-']) > 0 :
-        delete_competencia(values['-IdcomnpL25-'])
-        window['-IdcomnpL25-'].update(value="")
-    elif event == '-DeletePersona-':
+        idc = ucomp[int(str(values['-TablaCompeticionL25-'])[1])]
+        delete_competencia(idc)
+        ucomp = ShowCompeticionTable() #Hacemos un update a los datos
+        window['-TablaCompeticionL25-'].update(values=ucomp)
+    elif event == '-CButtonDelete-':
         print("Error al borrar registro")
 
 #----------------------------------------------------------------------------------------
     if event == '-UButtonDelete-':
+        upuniver = ShowUniversidadTable() #Hacemos un update a los datos
+        window['-TablaUniversidadL26-'].update(values=upuniver)
         window['-COL{26}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
 
-    if event == '-DeleteUniversidad-' and len(values['-IdunivL25-']) > 0 :
-        delete_universidad(values['-IdunivL25-'])
-        window['-IdunivL25-'].update(value="")
-    elif event == '-DeletePersona-':
+    if event == '-DeleteUniversidad-' and len(str(values['-TablaUniversidadL26-'])) > 0 :
+        idu = upuniver[int(str(values['-TablaUniversidadL26-'])[1])]
+        delete_universidad(idu)
+        upuniver = ShowUniversidadTable() #Hacemos un update a los datos
+        window['-TablaUniversidadL26-'].update(values=upuniver)
+    elif event == '-DeleteUniversidad-':
         print("Error al borrar registro")
 
 
 #----------------------------------------------------------------------------------------
     if event == '-ProblemButtonDelete-':
+        uproblem = ShowProblemaTable() #Hacemos un update a los datos
+        window['-TablaProblemaL27-'].update(values=uproblem)
         window['-COL{27}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
-    if event == '-DeleteProblema-' and len(values['-IdproblemL27-']) > 0 :
-        delete_problema(values['-IdproblemL27-'])
-        window['-IdproblemL27-'].update(value="")
-    elif event == '-DeletePersona-':
+    if event == '-DeleteProblema-' and len(str(values['-TablaProblemaL27-'])) > 0 :
+        idp = uproblem [int(str(values['-TablaProblemaL27-'])[1])]
+        delete_problema(idp)
+        uproblem = ShowProblemaTable() #Hacemos un update a los datos
+        window['-TablaProblemaL27-'].update(values=uproblem)
+    elif event == '-DeleteProblema-':
         print("Error al borrar registro")
  #----------------------------------------------------------------------------------------   
     if event == '-WorldFinalButtonDelete-':
+        ufinalm = ShowfinamundialTable() #Hacemos un update a los datos
+        window['-TablaFinalMunL28-'].update(values=ufinalm)
         window['-COL{28}-'].update(visible=True)
         window['-COL{20}-'].update(visible=False)
         
-    if event == '-DeleteFinalM-' and len(values['-IdFinalML24-']) > 0 :
-        delete_FinalMundial(values['-IdFinalML24-'])
-        window['-IdFinalML24-'].update(value="")
-    elif event == '-DeletePersona-':
+    if event == '-DeleteFinalM-' and len(str(values['-TablaFinalMunL28-'])) > 0 :
+        idfm = ufinalm[int(str(values['-TablaFinalMunL28-'])[1])]
+        delete_FinalMundial(idfm)
+        ufinalm = ShowfinamundialTable() #Hacemos un update a los datos
+        window['-TablaFinalMunL28-'].update(values=ufinalm)
+    elif event == '-DeleteFinalM-':
         print("Error al borrar registro")
 #----------------------------------------------------------------------------------------
 
@@ -2753,6 +2777,7 @@ while True:
         
      #Este evento nos regresa a la interfaz principal de añadir registros   
     if event == '-returnl100L101-' and window['-COL{101}-'].visible == True:
+        #print(personlst[int(str(values['-TablaPersona-'])[1])])
         window['-COL{101}-'].update(visible=False)
         window['-COL{100}-'].update(visible=True)
         
@@ -2860,6 +2885,6 @@ while True:
     
 window.close() #Cerramos la ventana
 
-
+#C:\Users\sergi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\Scripts
 
 # C:\Users\sergi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\Scripts\pyinstaller.exe
